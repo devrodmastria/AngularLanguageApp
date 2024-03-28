@@ -8,17 +8,16 @@ export class SpeechService {
 
 
   recognition =  new webkitSpeechRecognition();
-  isStoppedSpeechRecog = false;
-  public text = '';
+  liveStreaming = false;
   tempWords: any;
 
-  speechResults : string = "";
+  speechResultList : string[] = [];
 
   constructor() { }
 
   init() {
 
-    this.recognition.interimResults = true;
+    this.recognition.interimResults = false;
     this.recognition.lang = 'en-US';
 
     this.recognition.addEventListener('result', (e:any) => {
@@ -26,36 +25,26 @@ export class SpeechService {
         .map((result: any) => result[0])
         .map((result) => result.transcript)
         .join('');
-      this.tempWords = transcript;
 
-      this.speechResults = transcript;
+      this.speechResultList.push(transcript);
       console.log(transcript);
     });
   }
 
   startStreaming() {
-    this.isStoppedSpeechRecog = false;
+    this.liveStreaming = true;
     this.recognition.start();
     console.log("Speech recognition started")
     this.recognition.addEventListener('end', (condition: any) => {
-      if (this.isStoppedSpeechRecog) {
-        this.recognition.stop();
-        console.log("End speech recognition")
-      } else {
-        this.wordConcat()
-        this.recognition.start();
+      if (this.liveStreaming) {
+        this.recognition.start(); //restart speech engine
+        console.log("Restarting speech recognition")
       }
     });
   }
   stopStreaming() {
-    this.isStoppedSpeechRecog = true;
-    this.wordConcat()
+    this.liveStreaming = false;
     this.recognition.stop();
     console.log("End speech recognition")
-  }
-
-  wordConcat() {
-    this.text = this.text + ' ' + this.tempWords + '.';
-    this.tempWords = '';
   }
 }

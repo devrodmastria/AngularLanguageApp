@@ -4,8 +4,23 @@
 <button (click)="StartStreaming()">{{liveStreaming ? 'Stop streaming' : 'Start streaming'}}</button>
 
 @if(liveStreaming){
-    <p>Speech API results:</p>
-    <p>{{speechService.speechResults}}</p>
+    @for (sentence of speechService.speechResultList; track $index) {
+        <p style="border: 1px dotted blueviolet; border-radius: 10px; margin-bottom: 10px; width: 30%; padding: 10px;">
+        @if (sentence.split(' ').length > 1){
+            @for (item of sentence.split(' '); track $index) {
+                @if(item.length > 5){
+                    <a (click)="DisplayWord(item)">
+                        <span title="{{item}}" style="cursor: pointer; background-color: yellow; text-decoration: underline; ">{{item}}</span></a>
+                }
+                @else {
+                    <span style="background-color: transparent;">{{item}}</span>
+                }
+                <span>&nbsp;</span>
+            }
+        }
+        </p>
+    }
+
 }
 
 <router-outlet />

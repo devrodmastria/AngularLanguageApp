@@ -21,12 +21,10 @@ export class AppComponent {
   liveStreaming: boolean = false;
 
   ngOnInit(){
-
-  this.dictionaryService.getDefinition('camping').subscribe((response:DictionaryModel) => {
-      console.log(response);
-      
-    })
-  
+    this.dictionaryService.getDefinition('camping').subscribe((response:DictionaryModel) => {
+        console.log(response);
+        
+      })
   }
 
   StartStreaming(): void {
@@ -35,12 +33,19 @@ export class AppComponent {
       this.liveStreaming = !this.liveStreaming;
     
       this.speechService.stopStreaming();
+      this.speechService.speechResultList.splice(0, this.speechService.speechResultList.length);
     } 
     else {
       this.liveStreaming = !this.liveStreaming;
       this.speechService.startStreaming();
     }
+  }
 
+  DisplayWord(word : string){
+    this.dictionaryService.getDefinition(word).subscribe((response:DictionaryModel) => {
+      console.log(response);
+      alert(`${word}\n\n${response.shortdef[0]}`)
+    })
   }
 
 }
