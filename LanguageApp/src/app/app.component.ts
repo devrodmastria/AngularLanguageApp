@@ -21,8 +21,8 @@ export class AppComponent {
   liveStreaming: boolean = false;
 
   ngOnInit(){
-    this.dictionaryService.getDefinition('camping').subscribe((response:DictionaryModel) => {
-        console.log(response);
+    this.dictionaryService.getDefinition('camping').subscribe((response:DictionaryModel[]) => {
+        console.log(response[0].shortdef[0]);
         
       })
   }
@@ -41,11 +41,10 @@ export class AppComponent {
     }
   }
 
-  DisplayWord(word : string){
-    this.dictionaryService.getDefinition(word).subscribe((response:DictionaryModel) => {
-      console.log(response);
-      alert(`${word}\n\n${response.shortdef[0]}`)
+  DisplayWord(word : string): void{
+    this.dictionaryService.getDefinition(word).subscribe((response:DictionaryModel[]) => {
+      let selectedWord = response[0].shortdef[0];
+      alert(`${word} means...\n${selectedWord}`)
     })
   }
-
 }

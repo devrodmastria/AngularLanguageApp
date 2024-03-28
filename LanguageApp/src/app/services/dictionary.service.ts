@@ -10,7 +10,7 @@ import { secretkey } from '../secret';
 export class DictionaryService {
 
   constructor(private http: HttpClient) { }
-  getDefinition(word: string):Observable<DictionaryModel> {
-    return this.http.get<DictionaryModel> (`https://dictionaryapi.com/api/v3/references/collegiate/json/${word}?key=${secretkey}`)
+  getDefinition(word: string):Observable<DictionaryModel[]> {
+    return this.http.get<DictionaryModel[]> (`https://dictionaryapi.com/api/v3/references/collegiate/json/${word}?key=${secretkey}`)
   }
 }
