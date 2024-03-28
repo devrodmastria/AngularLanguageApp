@@ -2,7 +2,7 @@
 export const gc_recorder = require('node-record-lpcm16');
 const googleSpeech = require('@google-cloud/speech');
 const speechClient = new googleSpeech.SpeechClient({
-    keyFilename: './your-google-credentials-file.json'
+    keyFilename: './studybuddyangular.json'
   });
 
 const encoding = 'LINEAR16';
