@@ -43,3 +43,5 @@ Thumbs.db
 
 # Speech API KEY
 studybuddyangular.json
+
+secret.ts
