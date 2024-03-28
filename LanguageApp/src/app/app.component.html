@@ -1,0 +1,11 @@
+<h3>{{title}}</h3>
+<hr style="border: 1px dashed blue;">
+
+<button (click)="StartStreaming()">{{liveStreaming ? 'Stop streaming' : 'Start streaming'}}</button>
+
+@if(liveStreaming){
+    <p>Speech API results:</p>
+    <p>{{interimResults}}</p>
+}
+
+<router-outlet />
