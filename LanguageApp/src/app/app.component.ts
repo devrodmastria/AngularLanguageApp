@@ -12,20 +12,22 @@ import { SpeechService } from './services/speech.service';
 export class AppComponent {
   title = 'Specialized Language App';
 
-  constructor(private speechService : SpeechService){}
+  constructor(public speechService : SpeechService){
+    this.speechService.init();
+  }
 
   liveStreaming: boolean = false;
-  interimResults : string = "";
 
   StartStreaming(): void {
 
     if(this.liveStreaming){
       this.liveStreaming = !this.liveStreaming;
-      this.interimResults = this.speechService.getResults();
+    
+      this.speechService.stopStreaming();
     } 
     else {
       this.liveStreaming = !this.liveStreaming;
-      this.interimResults = "";
+      this.speechService.startStreaming();
     }
 
   }

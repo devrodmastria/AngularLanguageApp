@@ -1,5 +1,5 @@
 // speech API for Node.js
-export const gc_recorder = require('node-record-lpcm16');
+const gc_recorder = require('node-record-lpcm16');
 const googleSpeech = require('@google-cloud/speech');
 const speechClient = new googleSpeech.SpeechClient({
     keyFilename: './studybuddyangular.json'
