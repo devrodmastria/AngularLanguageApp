@@ -22,6 +22,10 @@ export class AppComponent {
 
   selectedWord : string = "";
 
+  selectedPron : string = "";
+
+  selectedDef : string = "";
+
   ngOnInit(){
     this.dictionaryService.getDefinition('camping').subscribe((response:DictionaryModel[]) => {
         console.log('Testing Dictionary API: ' + response[0].shortdef[0]);
@@ -49,7 +53,18 @@ export class AppComponent {
 
   DisplayWord(word : string): void{
     this.dictionaryService.getDefinition(word).subscribe((response:DictionaryModel[]) => {
-      this.selectedWord = response[0].shortdef[0];
+      this.selectedWord = word;
+      this.selectedDef = response[0].shortdef[0];
+      if(response[0].hwi.prs != undefined){
+        this.selectedPron = response[0].hwi.prs[0].mw;
+      }
+      else{
+        this.selectedPron = "pronunciation not found";
+      }
+      // this.selectedPron = response[0].hwi.prs?[0].mw ?? "pronunciation not found";
     })
+  }
+  addFav():void{
+
   }
 }
