@@ -22,7 +22,7 @@ export class AppComponent {
 
   ngOnInit(){
     this.dictionaryService.getDefinition('camping').subscribe((response:DictionaryModel[]) => {
-        console.log(response[0].shortdef[0]);
+        console.log('Testing Dictionary API: ' + response[0].shortdef[0]);
         
       })
   }
@@ -33,12 +33,16 @@ export class AppComponent {
       this.liveStreaming = !this.liveStreaming;
     
       this.speechService.stopStreaming();
-      this.speechService.speechResultList.splice(0, this.speechService.speechResultList.length);
     } 
     else {
       this.liveStreaming = !this.liveStreaming;
       this.speechService.startStreaming();
     }
+  }
+
+  ClearResults(): void {
+      // clear results from screen
+      this.speechService.speechResultList.splice(0, this.speechService.speechResultList.length);
   }
 
   DisplayWord(word : string): void{
