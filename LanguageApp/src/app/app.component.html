@@ -1,68 +1,36 @@
+@if(loggedIn){
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
 
-<h3 style="margin-left: 10px;">{{title}}</h3>
-<hr style="border: 1px dashed blue;">
+            <a class="navbar-brand" href="#" style="margin-left: 10px;">{{title}}</a>
 
-<div class="container">
-    
-    <div class="row justify-content-start">
-        <div class="col-4">
-            
-            
-            <span style="display: flex; flex-direction: row;">
-                <button type="button" class="btn btn-warning" (click)="StartStreaming()">{{liveStreaming ? 'Stop streaming' : 'Start streaming'}}</button>
-                
-                <button type="button" class="btn btn-outline-secondary" style="margin-left: 5px;" (click)="ClearResults()" [disabled]="!(speechService.speechResultList.length > 1)">Clear Results</button>
-            </span>
-
-            <!-- bubble design -->
-            @for (sentence of speechService.speechResultList; track $index) {
-                <div  class="bubble">
-                    <p>
-                        @if (sentence.split(' ').length > 1){
-                            @for (item of sentence.split(' '); track $index) {
-                                @if(item.length > 5){
-                                    
-                                    <!-- specialized word -->
-                                    @if(item.includes("-")){
-                                        <span class="hyper-word-combo">{{item}}</span>
-                                    }
-                                    @else {
-                                        <a (click)="DisplayWord(item)">
-                                            <span class="hyper-word">{{item}}</span>
-                                        </a>
-                                    }
-                                    
-                                }
-                                @else {
-                                    <span class="regular-word">{{item}}</span>
-                                }
-                                <span>&nbsp;</span>
-                            }
-                        }
-                    </p>
-
-                </div>
-            }
-        </div>
-        
-        <div class="col-4"></div>
-        <div class="col-4 p-3 bg-info bg-opacity-10 border border-info border-start-5 rounded-start rounded-end">
-            <p style="text-align: center;">Definitions</p>
-            <h3>{{selectedWord}} </h3>
-            <br>
-            <p>{{selectedDef}}</p>
-            <br>
-            <p>{{selectedPron}}</p>
-            <br>
-            <div class="d-grid gap-2 col-6 mx-auto">
-            <button type="button" (click)="addFav()" class="btn btn-outline-success">Save</button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link active" routerLink="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink="/fav">Favorites</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" data-bs-toggle="dropdown"
+                            role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Subject
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="#">English</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Spanish</a>
+                        </div>
+                    </li>
+                </ul>
             </div>
-        </div>
 
-    </div>
-    
-</div>
+        
 
+    </nav>
+}
+@else {
+    <p>Please login to continue</p>
+}
 
-
-<!-- <router-outlet /> -->
+<router-outlet />

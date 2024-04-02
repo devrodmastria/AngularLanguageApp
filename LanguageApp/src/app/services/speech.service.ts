@@ -14,9 +14,13 @@ export class SpeechService {
 
   speechResultList : string[] = ['this is the beginning of a demo where long words mix with hyperlinked colors'];
 
-  specializedWords : string[] = ["dependency injection", "solid principles"];
+  specializedWords : string[] = ["dependency injection", "solid principles", "mutual funds"];
 
-  constructor() { }
+  constructor() { 
+
+    // demon for dictionary filter
+    this.filterSpecialWords('and combined words like mutual funds are highlighted in orange')
+  }
 
   init() {
 
