@@ -6,7 +6,7 @@
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
-                        <a class="nav-link active" routerLink="/">Home</a>
+                        <a class="nav-link active" routerLink="/home">Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" routerLink="/fav">Favorites</a>
@@ -30,7 +30,8 @@
     </nav>
 }
 @else {
-    <p>Please login to continue</p>
+    
+    <app-login></app-login>
 }
 
-<router-outlet />
+<router-outlet></router-outlet>
