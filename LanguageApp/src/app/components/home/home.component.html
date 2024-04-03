@@ -1,78 +1,97 @@
 <head link rel="stylesheet"></head>
+
 <div class="container text-center">
   <div>
     <div class="row align-items-center">
       <div class="col"></div>
       <!-- bubble design -->
-      <div class="col">@for (sentence of speechService.speechResultList; track $index) {
-        <div class="speech-bubble-shadow">
-          <p>
-            @if (sentence.split(' ').length > 1){ @for (item of sentence.split(' '); track $index) { @if(item.length > 6){
-  
-            <!-- specialized word -->
-            @if(item.includes("-")){
-            <a (click)="DisplayWordCombo(item)">
-              <span class="hyper-word-combo hover-demo">{{ item }}</span>
-            </a>
-            } @else {
-            <a (click)="DisplayWord(item)">
-              <span class="hyper-word hover-demo">{{ item }}</span>
-            </a>
-            } } @else {
-            <span class="regular-word">{{ item }}</span>
-            }
-            <span>&nbsp;</span>
-            } }
-          </p>
-          
-        </div>
-        }<span style="display: flex; flex-direction: row; margin-top: 2%;">
-          @if(liveStreaming){
-          <button
-            type="button"
-            class="btn btn-secondary"
-            (click)="StartStreaming()"
-          >
-            {{ liveStreaming ? "Stop streaming" : "Start streaming" }}
-          </button>
+      <div class="col" style="background-color: transparent;">
+        
+        @for (sentence of speechService.speechResultList; track $index) {
+          <div class="speech-bubble-shadow mx-auto">
+            <p>
+              @if (sentence.split(' ').length > 1){ @for (item of sentence.split(' '); track $index) { @if(item.length > 6){
     
-          } @else {
-          <button
-            type="button"
-            class="btn btn-primary"
-            (click)="StartStreaming()"
-          >
-            {{ liveStreaming ? "Stop streaming" : "Start streaming" }}
-          </button>
-          }
-    
-          <button
-            type="button"
-            class="btn btn-outline-secondary"
-            style="margin-left: 10px"
-            (click)="ClearResults()"
-            [disabled]="!(speechService.speechResultList.length > 1)"
-          >
-            Clear Results
-          </button>
-        </span></div>
+              <!-- specialized word -->
+              @if(item.includes("-")){
+              <a (click)="DisplayWordCombo(item)" data-bs-toggle="modal" data-bs-target="#wordModal">
+                <span class="hyper-word-combo hover-demo">{{ item }}</span>
+              </a>
+              } @else {
+              <a (click)="DisplayWord(item)" data-bs-toggle="modal" data-bs-target="#wordModal">
+                <span class="hyper-word hover-demo">{{ item }}</span>
+              </a>
+              } } @else {
+              <span class="regular-word">{{ item }}</span>
+              }
+              <span>&nbsp;</span>
+              } }
+            </p>
+            
+          </div>
+        }
+        
+      </div>
       <div class="col"></div>
     </div>
-    <!--         
-        <div class="col-4 p-5 bg-info bg-opacity-10 border border-info border-start-5 rounded-start rounded-end">
-            <p style="text-align: center;">Definitions</p>
-            <h3>{{selectedWord}} </h3>
-            <br>
-            <p>{{selectedDef}}</p>
-            <br>
-            <p style="font-style: italic">{{selectedPron}}</p>
-            
-            @if(selectedWord.length > 0){
-                <div class="d-grid gap-2 col-6 mx-auto">
-                    <button type="button" (click)="AddFav()" class="btn btn-outline-success"><i class="bi bi-star"> Save</i></button>
-                </div>
-            }
 
-        </div> -->
   </div>
 </div>
+ 
+<div class="modal fade" id="wordModal" tabindex="-1" aria-labelledby="wordModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="wordModalLabel">Definition</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <h3>{{selectedWord}} </h3>
+        <br>
+        <p>{{selectedDef}}</p>
+        <br>
+        <p style="font-style: italic">{{selectedPron}}</p>
+        
+      </div>
+      <div class="modal-footer" style="display: flex; justify-content: space-between;">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" (click)="AddFav()" class="btn btn-primary"><i class="bi bi-star"> Save</i></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+  <div style="display: flex; position: absolute; bottom: 3%; width: 100%; justify-content: center;">
+    @if(liveStreaming){
+    <button
+      type="button"
+      class="btn btn-secondary"
+      (click)="StartStreaming()"
+    >
+      {{ liveStreaming ? "Stop streaming" : "Start streaming" }}
+    </button>
+
+    } @else {
+    <button
+      type="button"
+      class="btn btn-primary"
+      (click)="StartStreaming()"
+    >
+      {{ liveStreaming ? "Stop streaming" : "Start streaming" }}
+    </button>
+    }
+
+    <button
+      type="button"
+      class="btn btn-outline-secondary"
+      style="margin-left: 10px"
+      (click)="ClearResults()"
+      [disabled]="!(speechService.speechResultList.length > 1)"
+    >
+      Clear Results
+    </button>
+  </div>
+
+
