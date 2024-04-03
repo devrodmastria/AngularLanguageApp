@@ -24,14 +24,23 @@ export class AppComponent {
   allUsers: UserTable = {} as UserTable;
   user: SocialUser = {} as SocialUser;
 
+  debugMode : boolean = false;
+
   constructor (private socialAuthServiceConfig: SocialAuthService, private router: Router, private databaseService:DatabaseService) {}
 
   ngOnInit() {
-    this.socialAuthServiceConfig.authState.subscribe((userResponse: SocialUser) => {
-      this.user = userResponse;
-      //if login fails, it will return null.
-      this.loggedIn = (userResponse != null);
-    });
+
+    if(this.debugMode == false){
+      this.socialAuthServiceConfig.authState.subscribe((userResponse: SocialUser) => {
+        this.user = userResponse;
+        //if login fails, it will return null.
+        this.loggedIn = (userResponse != null);
+      });
+    }
+    else {
+      this.loggedIn = true;
+    }
+
   }
 
 
