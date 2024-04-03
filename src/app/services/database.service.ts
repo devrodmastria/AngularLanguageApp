@@ -38,8 +38,6 @@ export class DatabaseService {
     return this.http.get<UserTable[]> (`${this.baseUrl}/Users/${id}`)
   }
   AddUser (u: UserTable): Observable <UserTable> {
-
-    // TODO - check if user already signed up before adding them
     return this.http.post<UserTable> (`${this.baseUrl}/Users`, u)
   }
 }

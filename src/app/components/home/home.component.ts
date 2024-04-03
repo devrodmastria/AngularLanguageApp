@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { SpeechService } from '../../services/speech.service';
 import { DictionaryService } from '../../services/dictionary.service';
@@ -6,8 +6,6 @@ import { DictionaryModel } from '../../Models/dictionary-model';
 import { FavoriteWord } from '../../Models/favorite-words';
 import { SocialAuthService, SocialUser } from '@abacritt/angularx-social-login';
 import { DatabaseService } from '../../services/database.service';
-import { UserTable } from '../../Models/user-table';
-import { AppComponent } from '../../app.component';
 
 
 @Component({
@@ -20,7 +18,7 @@ import { AppComponent } from '../../app.component';
 export class HomeComponent {
 
   constructor(public speechService : SpeechService, private dictionaryService: DictionaryService, 
-    private socialAuthServiceConfig: SocialAuthService, private router: Router, private databaseservice: DatabaseService){
+    private socialAuthServiceConfig: SocialAuthService, private router: Router, private databaseService: DatabaseService){
     this.speechService.init();
   }
 
@@ -36,17 +34,19 @@ export class HomeComponent {
   selectedDef : string = "Click on a highlighted word to get started";
   selectedWordId: string = "";
 
+  @Output() createEventFave = new EventEmitter<FavoriteWord>();
+
   ngOnInit(){
     this.socialAuthServiceConfig.authState.subscribe((u:SocialUser) => {
       this.user = u;
       this.loggedIn = (this.user != null);
 
+      if (this.loggedIn == false){
+        this.router.navigate(["/"]);
+      }
+
       
     })
-    this.dictionaryService.getDefinition('camping').subscribe((response:DictionaryModel[]) => {
-        console.log('Testing Dictionary API: ' + response[0].shortdef[0]);
-        
-      })
   }
 
   StartStreaming(): void {
@@ -87,20 +87,18 @@ export class HomeComponent {
     this.selectedDef = "this will require a custom database or API !"
   }
 
-  
-    addFavorite(): void {
-      let newFav: FavoriteWord = {} as FavoriteWord
-      newFav.word = this.selectedWord;
-      newFav.definition = this.selectedDef;
-      newFav.phonetics = this.selectedPron;
-      newFav.userId = this.user.id;
-      newFav.source = "Merriam-Webster";
+  addFavorite(): void {
+    let newFav: FavoriteWord = {} as FavoriteWord
+    newFav.word = this.selectedWord;
+    newFav.definition = this.selectedDef;
+    newFav.phonetics = this.selectedPron;
+    newFav.userId = this.user.id;
+    newFav.source = "Merriam-Webster";
 
-      // this.router.navigate(["/Favorites"]);
-
-      this.databaseservice.addFavorites(newFav).subscribe((response: FavoriteWord) => {
-        this.AllFavorites.push(newFav)
-      });
-    };
+    this.databaseService.addFavorites(newFav).subscribe((response: FavoriteWord) =>{
+      this.createEventFave.emit(response);
+    })
+    
+  };
 
 }

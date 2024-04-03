@@ -27,6 +27,8 @@ export class AppComponent {
 
   constructor (private socialAuthServiceConfig: SocialAuthService, private router: Router, private databaseService:DatabaseService) {}
 
+  @Output() createEventUser = new EventEmitter<UserTable>();
+
   ngOnInit() {
 
     if(this.debugMode == false){
@@ -38,7 +40,9 @@ export class AppComponent {
           let newUser : UserTable = {} as UserTable;
           newUser.googleId = userResponse.id;
           newUser.langPreference = "en-US";
+
           this.databaseService.AddUser(newUser).subscribe((response: UserTable) => {
+            this.createEventUser.emit(response);
             console.log(response);
           });
         }
@@ -52,13 +56,5 @@ export class AppComponent {
   signOut(): void {
     this.socialAuthServiceConfig.signOut();
     this.router.navigate([""]); 
-  }
-
-  @Output() createEvent = new EventEmitter<FavoriteWord>();
-  
-  addFavorite(newFave: FavoriteWord): void {
-    this.databaseService.addFavorites(newFave).subscribe((response: FavoriteWord) =>{
-      this.createEvent.emit(response);
-    })
   }
 }
