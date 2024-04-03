@@ -1,8 +1,13 @@
 import { Component } from '@angular/core';
-import { RouterLink, RouterOutlet } from '@angular/router';
+import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { SpeechService } from '../../services/speech.service';
 import { DictionaryService } from '../../services/dictionary.service';
 import { DictionaryModel } from '../../Models/dictionary-model';
+import { FavoriteWord } from '../../Models/favorite-words';
+import { SocialAuthService, SocialUser } from '@abacritt/angularx-social-login';
+import { DatabaseService } from '../../services/database.service';
+import { UserTable } from '../../Models/user-table';
+import { AppComponent } from '../../app.component';
 
 
 @Component({
@@ -14,20 +19,30 @@ import { DictionaryModel } from '../../Models/dictionary-model';
 })
 export class HomeComponent {
 
-  constructor(public speechService : SpeechService, private dictionaryService: DictionaryService){
+  constructor(public speechService : SpeechService, private dictionaryService: DictionaryService, 
+    private socialAuthServiceConfig: SocialAuthService, private router: Router, private databaseservice: DatabaseService){
     this.speechService.init();
   }
 
   liveStreaming: boolean = false;
   loggedIn: boolean = true;
 
+  user:SocialUser = {} as SocialUser
+
+  AllFavorites: FavoriteWord[] = []
+
   selectedWord : string = "";
-
   selectedPron : string = "";
-
   selectedDef : string = "Click on a highlighted word to get started";
+  selectedWordId: string = "";
 
   ngOnInit(){
+    this.socialAuthServiceConfig.authState.subscribe((u:SocialUser) => {
+      this.user = u;
+      this.loggedIn = (this.user != null);
+
+      
+    })
     this.dictionaryService.getDefinition('camping').subscribe((response:DictionaryModel[]) => {
         console.log('Testing Dictionary API: ' + response[0].shortdef[0]);
         
@@ -54,6 +69,7 @@ export class HomeComponent {
 
   DisplayWord(word : string): void{
     this.dictionaryService.getDefinition(word).subscribe((response:DictionaryModel[]) => {
+    
       this.selectedWord = word;
       this.selectedDef = response[0].shortdef[0];
       if(response[0].hwi.prs != undefined){
@@ -71,16 +87,20 @@ export class HomeComponent {
     this.selectedDef = "this will require a custom database or API !"
   }
 
-  AddFav():void{
-    // userId
-    // word
-    // definition
-    // source
-    // phonetics
-    // context / notes
-    // audio source
+  
+    addFavorite(): void {
+      let newFav: FavoriteWord = {} as FavoriteWord
+      newFav.word = this.selectedWord;
+      newFav.definition = this.selectedDef;
+      newFav.phonetics = this.selectedPron;
+      newFav.userId = this.user.id;
+      newFav.source = "Merriam-Webster";
 
-    
-  }
+      // this.router.navigate(["/Favorites"]);
+
+      this.databaseservice.addFavorites(newFav).subscribe((response: FavoriteWord) => {
+        this.AllFavorites.push(newFav)
+      });
+    };
 
 }

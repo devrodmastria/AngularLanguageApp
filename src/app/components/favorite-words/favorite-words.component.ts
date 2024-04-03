@@ -24,14 +24,23 @@ export class FavoriteWordsComponent {
       this.user = userResponse;
       //if login fails, it will return null.
       this.loggedIn = (userResponse != null);
+
+      if(this.loggedIn == true) {
+        this.databaseService.getFavoritesbyId(this.user.id).subscribe((response: FavoriteWord[]) => {
+          this.allFavorites = response; 
+
     });
-    this.getFavorite();
+  }
+})
   }
 
-  getFavorite(){
-    this.databaseService.getFavorites().subscribe((response:FavoriteWord[]) =>{
-      this.allFavorites = response;
-    });
+  DeleteFavorite(id: number) {
+    let deleteFavItem = this.allFavorites.find(f => f.id == id)
+    
+    let index: number = this.allFavorites.findIndex(x => x.id == id)
+    this.allFavorites.splice(index,1);
+  
+    this.databaseService.DeleteFavorites(deleteFavItem!).subscribe()
   }
 }
 

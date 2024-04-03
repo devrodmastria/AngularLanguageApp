@@ -20,10 +20,9 @@ export class AppComponent {
   title = 'Specialized Language App';
 
   loggedIn: boolean = false;
-  allFavorites:FavoriteWord[] = [];
   allUsers: UserTable = {} as UserTable;
   user: SocialUser = {} as SocialUser;
-
+  AllFavorites: FavoriteWord[] = []
   debugMode : boolean = false;
 
   constructor (private socialAuthServiceConfig: SocialAuthService, private router: Router, private databaseService:DatabaseService) {}
@@ -35,6 +34,14 @@ export class AppComponent {
         this.user = userResponse;
         //if login fails, it will return null.
         this.loggedIn = (userResponse != null);
+        if (this.loggedIn){
+          let newUser : UserTable = {} as UserTable;
+          newUser.googleId = userResponse.id;
+          newUser.langPreference = "en-US";
+          this.databaseService.AddUser(newUser).subscribe((response: UserTable) => {
+            console.log(response);
+          });
+        }
       });
     }
     else {
@@ -42,7 +49,10 @@ export class AppComponent {
     }
 
   }
-
+  signOut(): void {
+    this.socialAuthServiceConfig.signOut();
+    this.router.navigate([""]); 
+  }
 
   @Output() createEvent = new EventEmitter<FavoriteWord>();
   

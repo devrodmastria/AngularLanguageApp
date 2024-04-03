@@ -51,11 +51,12 @@
         <p>{{selectedDef}}</p>
         <br>
         <p style="font-style: italic">{{selectedPron}}</p>
+        <p style="font-style: bold">Source: Merriam-Webster</p>
         
       </div>
       <div class="modal-footer" style="display: flex; justify-content: space-between;">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" (click)="AddFav()" class="btn btn-primary"><i class="bi bi-star"> Save</i></button>
+        <button type="button" (click)="addFavorite()" class="btn btn-primary"><i class="bi bi-star"> Save</i></button> 
       </div>
     </div>
   </div>
