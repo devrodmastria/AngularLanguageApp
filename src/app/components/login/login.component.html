@@ -1,6 +1,8 @@
 
-@if (!loggedIn) { 
 
+@if (!loggedIn) { 
+    <div class="row custom-row">
+    <div style="background-image:url('/assets/realpic.jpg'); opacity: 0.5; background-size: cover; background-repeat: no-repeat;">
     <nav class="navbar navbar-expand-lg navbar-light" style="background-color: lightblue;">
 
         <a class="navbar-brand" href="#" style="margin-left: 10px;">{{title}}</a>
@@ -14,7 +16,8 @@
         </tr>
     </table>
 
-
+    </div>  
+    </div>
 }
 
 <router-outlet></router-outlet>

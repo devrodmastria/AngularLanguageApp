@@ -5,3 +5,9 @@
     padding-left: 10px; 
     padding-right: 10px;
 }
+
+.custom-row{
+    height: 100%; /* Adjust the height as needed */
+    background-repeat: no-repeat;
+    background-size: contain;
+}
