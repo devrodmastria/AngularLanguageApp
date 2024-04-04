@@ -5,17 +5,19 @@ import { SocialAuthService, SocialUser } from '@abacritt/angularx-social-login';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DatabaseService } from '../../services/database.service';
 import { DictionaryService } from '../../services/dictionary.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-favorite-words',
   standalone: true,
-  imports: [],
+  imports: [FormsModule],
   templateUrl: './favorite-words.component.html',
   styleUrl: './favorite-words.component.css'
 })
 export class FavoriteWordsComponent {
   loggedIn: boolean = false;
   user: SocialUser = {} as SocialUser;
+  newcontext: string = ""
 
   allFavesFromAzure: FavoriteWord[] = {} as FavoriteWord[];
 
@@ -54,8 +56,9 @@ export class FavoriteWordsComponent {
 
   }
 
-  UpdateFave(faveItem: FavoriteWord, faveNote: string){
-    this.databaseService.UpdateFavorites(faveItem, faveNote);
+  UpdateFave(faveItem: FavoriteWord){
+    this.databaseService.UpdateFavorites(faveItem).subscribe((response: FavoriteWord) => {
+    });
   }
 }
 

@@ -31,8 +31,8 @@ export class DatabaseService {
   DeleteFavorites(f: FavoriteWord):Observable <FavoriteWord> {
     return this.http.delete<FavoriteWord> (`${this.baseUrl}/Favorite/${f.id}`)
   }
-  UpdateFavorites (f:FavoriteWord, notes: string): Observable <FavoriteWord> {
-    return this.http.put<FavoriteWord> (`${this.baseUrl}/Favorite/${f.id}`, notes)
+  UpdateFavorites (f:FavoriteWord): Observable <FavoriteWord> {
+    return this.http.put<FavoriteWord> (`${this.baseUrl}/Favorite/${f.id}`, f)
   }
   getUserbyId(id:string): Observable <UserTable[]> {
     return this.http.get<UserTable[]> (`${this.baseUrl}/Users/${id}`)
