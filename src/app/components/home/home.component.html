@@ -1,70 +1,83 @@
-<head link rel="stylesheet"></head>
+@if(loggedIn){
 
-<div class="container text-center">
-  <div>
-    <div class="row align-items-center">
-      <div class="col"></div>
-      <!-- bubble design -->
-      <div class="col" style="background-color: transparent;">
-        
-        @for (sentence of speechService.speechResultList; track $index) {
-          <div class="speech-bubble-shadow mx-auto">
-            <p>
-              @if (sentence.split(' ').length > 1){ @for (item of sentence.split(' '); track $index) { @if(item.length > 6){
-    
-              <!-- specialized word -->
-              @if(item.includes("-")){
-              <a (click)="DisplayWordCombo(item)" data-bs-toggle="modal" data-bs-target="#wordModal">
-                <span class="hyper-word-combo hover-demo">{{ item }}</span>
-              </a>
-              } @else {
-              <a (click)="DisplayWord(item)" data-bs-toggle="modal" data-bs-target="#wordModal">
-                <span class="hyper-word hover-demo">{{ item }}</span>
-              </a>
-              } } @else {
-              <span class="regular-word">{{ item }}</span>
-              }
-              <span>&nbsp;</span>
-              } }
-            </p>
-            
-          </div>
-        }
-        
-      </div>
-      <div class="col"></div>
-    </div>
+  <div class="container text-center">
+    <div>
+      <div class="row align-items-center">
+        <div class="col"></div>
+        <!-- bubble design -->
+        <div class="col" style="background-color: transparent;">
+          
+          @for (sentence of speechService.speechResultList.reverse(); track $index) {
+            <div class="speech-bubble-shadow mx-auto">
+              <p>
 
-  </div>
-</div>
- 
-<div class="modal fade" id="wordModal" tabindex="-1" aria-labelledby="wordModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="wordModalLabel">Definition</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <!-- sentence has two or more words -->
+                @if (sentence.split(' ').length > 1){ 
+                    @for (item of sentence.split(' '); track $index) { 
+                        @if(item.length > 6){
+                        
+                            <!-- specialized word -->
+                            @if(item.includes("-")){
+                              <a (click)="DisplayWordCombo(item)" data-bs-toggle="modal" data-bs-target="#wordModal">
+                                <span class="hyper-word-combo hover-demo">{{ item }}</span>
+                              </a>
+                            } 
+                            @else {
+                              <a (click)="DisplayWord(item)" data-bs-toggle="modal" data-bs-target="#wordModal">
+                                <span class="hyper-word hover-demo">{{ item }}</span>
+                              </a>
+                            }
+                      
+                        }
+                        @else {
+                          <span class="regular-word">{{ item }}</span>
+                        }
+                        <span>&nbsp;</span>
+                    }
+                }
+                @else { <!-- sentence has only one word -->
+                  <span class="regular-word">{{ sentence }}</span>
+                }
+              </p>
+              
+            </div>
+          }
+          
+        </div>
+        <div class="col"></div>
       </div>
-      <div class="modal-body">
-        <h3>{{selectedWord}} </h3>
-        <br>
-        <p>{{selectedDef}}</p>
-        <br>
-        <p style="font-style: italic">{{selectedPron}}</p>
-        <p style="font-style: bold; text-align: end;">Source: Merriam-Webster</p>
-        
-      </div>
-      <div class="modal-footer" style="display: flex; justify-content: space-between;">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" (click)="addFavorite()" class="btn btn-primary"><i class="bi bi-star"> Save</i></button> 
-      </div>
+
     </div>
   </div>
-</div>
+  
+  <div class="modal fade" id="wordModal" tabindex="-1" aria-labelledby="wordModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="wordModalLabel">Definition</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <h3>{{selectedWord}} </h3>
+          <br>
+
+          <p>Definition: <strong>{{selectedDef}}</strong></p>
+          <br>
+          <p>Phonetics: <span style="font-style: italic">{{selectedPron}}</span></p>
+          <p style="font-style: bold; text-align: end;">Source: Merriam-Webster</p>
+          
+        </div>
+        <div class="modal-footer" style="display: flex; justify-content: space-between;">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" (click)="addFavorite()" class="btn btn-primary" data-bs-dismiss="modal"><i class="bi bi-star"> Save</i></button> 
+        </div>
+      </div>
+    </div>
+  </div>
 
 
 
-  <div style="display: flex; position: absolute; bottom: 3%; width: 100%; justify-content: center;">
+  <div style="display: flex; position: absolute; padding: 1%; bottom: 0px; width: 100%; justify-content: center; background-color: lightblue; opacity: 0.9;">
     @if(liveStreaming){
     <button
       type="button"
@@ -87,12 +100,11 @@
     <button
       type="button"
       class="btn btn-outline-secondary"
-      style="margin-left: 10px"
+      style="margin-left: 10px;"
       (click)="ClearResults()"
       [disabled]="!(speechService.speechResultList.length > 1)"
     >
       Clear Results
     </button>
   </div>
-
-
+}

@@ -23,7 +23,7 @@ export class HomeComponent {
   }
 
   liveStreaming: boolean = false;
-  loggedIn: boolean = true;
+  loggedIn: boolean = false;
 
   user:SocialUser = {} as SocialUser
 
@@ -34,7 +34,7 @@ export class HomeComponent {
   selectedDef : string = "Click on a highlighted word to get started";
   selectedWordId: string = "";
 
-  @Output() createEventFave = new EventEmitter<FavoriteWord>();
+  @Output() createEvent = new EventEmitter<FavoriteWord>();
 
   ngOnInit(){
     this.socialAuthServiceConfig.authState.subscribe((u:SocialUser) => {
@@ -84,7 +84,7 @@ export class HomeComponent {
   DisplayWordCombo(word : string): void{
 
     this.selectedWord = word.replace("-", " ");
-    this.selectedDef = "this will require a custom database or API !"
+    this.selectedDef = "ToDo - custom database with specialized terms"
   }
 
   addFavorite(): void {
@@ -95,9 +95,14 @@ export class HomeComponent {
     newFav.userId = this.user.id;
     newFav.source = "Merriam-Webster";
 
+    // back up plan - save in temporary memory
+    this.dictionaryService.allFavorites.push(newFav);
+
     this.databaseService.addFavorites(newFav).subscribe((response: FavoriteWord) =>{
-      this.createEventFave.emit(response);
+      this.createEvent.emit(response);
     })
+
+    console.log('Home Fave Added');
     
   };
 

@@ -1,8 +1,44 @@
-<ol>
-    @for (f of allFavorites; track f.id) {
-      
-       
-        <li style="margin-bottom: 10px;"> {{f.word}} <br>
+@if(loggedIn){
+    
+    <div class="accordion" id="accordionExample" style="margin: 10px 20%;">
 
-    }
-</ol>
+       <label style="text-align: center; margin-bottom: 1%;">Favorite words</label> 
+
+        @for (faveItem of allFavesFromAzure; track faveItem.id) {
+
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" 
+                    [attr.data-bs-target]="'#collapse'+faveItem.id" aria-expanded="true" aria-controls="collapseOne">
+                    {{faveItem.word}}
+                </button>
+                </h2>
+                <div [attr.id]="'collapse'+faveItem.id" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    
+                    
+                    <p>Definition: <strong>{{faveItem.definition}}</strong></p>
+                    <br>
+                    <p>Phonetics: <span style="font-style: italic">{{faveItem.phonetics}}</span></p>
+
+                    <br>
+
+                    <div class="mb-3">
+                        <label for="exampleFormControlTextarea1" class="form-label">Notes</label>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" value="{{faveItem.context}}"></textarea>
+                        <button type="submit" (click)="UpdateFave(faveItem, faveItem.context)" class="btn btn-outline-info" style="margin-top: 1%;">Save</button>
+                      </div>
+
+                    <p style="font-style: bold; text-align: end;">Source: {{faveItem.source}}</p>
+                    <div style="display: flex; justify-content: flex-end;">
+                        <button (click)="DeleteFavorite(faveItem.id)" class="btn btn-outline-secondary">Remove from Favorites</button>
+                    </div>
+                    
+
+                </div>
+                </div>
+            </div>
+        }
+    </div>
+
+}

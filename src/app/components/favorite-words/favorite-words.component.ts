@@ -2,8 +2,9 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { FavoriteWord } from '../../Models/favorite-words';
 import { UserTable } from '../../Models/user-table';
 import { SocialAuthService, SocialUser } from '@abacritt/angularx-social-login';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DatabaseService } from '../../services/database.service';
+import { DictionaryService } from '../../services/dictionary.service';
 
 @Component({
   selector: 'app-favorite-words',
@@ -14,12 +15,18 @@ import { DatabaseService } from '../../services/database.service';
 })
 export class FavoriteWordsComponent {
   loggedIn: boolean = false;
-  allFavorites:FavoriteWord[] = [];
   user: SocialUser = {} as SocialUser;
 
-  constructor (private socialAuthServiceConfig: SocialAuthService, private router: Router, private databaseService:DatabaseService) {}
+  allFavesFromAzure: FavoriteWord[] = {} as FavoriteWord[];
+
+  constructor (private socialAuthServiceConfig: SocialAuthService, private dictionaryService: DictionaryService,
+    private router: Router, private route: ActivatedRoute, private databaseService:DatabaseService) {}
 
   ngOnInit() {
+
+    // placeholder favorites
+    this.allFavesFromAzure = this.dictionaryService.allFavorites;
+
     this.socialAuthServiceConfig.authState.subscribe((userResponse: SocialUser) => {
       this.user = userResponse;
       //if login fails, it will return null.
@@ -27,20 +34,28 @@ export class FavoriteWordsComponent {
 
       if(this.loggedIn == true) {
         this.databaseService.getFavoritesbyId(this.user.id).subscribe((response: FavoriteWord[]) => {
-          this.allFavorites = response; 
-
+          this.allFavesFromAzure = response;
     });
   }
 })
   }
 
   DeleteFavorite(id: number) {
-    let deleteFavItem = this.allFavorites.find(f => f.id == id)
-    
-    let index: number = this.allFavorites.findIndex(x => x.id == id)
-    this.allFavorites.splice(index,1);
-  
+
+    // delete from Azure
+    let deleteFavItem = this.allFavesFromAzure.find(f => f.id == id)
+    let indexAzure: number = this.allFavesFromAzure.findIndex(x => x.id == id)
+    this.allFavesFromAzure.splice(indexAzure,1);
     this.databaseService.DeleteFavorites(deleteFavItem!).subscribe()
+
+    // delete from dictionary service
+    let indexLocal: number = this.dictionaryService.allFavorites.findIndex(x => x.id == id)
+    this.dictionaryService.allFavorites.splice(indexLocal,1);
+
+  }
+
+  UpdateFave(faveItem: FavoriteWord, faveNote: string){
+    this.databaseService.UpdateFavorites(faveItem, faveNote);
   }
 }
 
