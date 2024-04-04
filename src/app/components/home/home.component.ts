@@ -37,12 +37,15 @@ export class HomeComponent {
   @Output() createEvent = new EventEmitter<FavoriteWord>();
 
   ngOnInit(){
+
+
+    
     this.socialAuthServiceConfig.authState.subscribe((u:SocialUser) => {
       this.user = u;
       this.loggedIn = (this.user != null);
 
       if (this.loggedIn == false){
-        this.router.navigate(["/"]);
+        this.router.navigate(["/login"]);
       }
 
       

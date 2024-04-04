@@ -23,23 +23,24 @@ export class AppComponent {
 
   ngOnInit() {
 
-    this.socialAuthServiceConfig.authState.subscribe((userResponse: SocialUser) => {
+    if (this.loggedIn == false){
+      this.router.navigate(["/login"]);
+    }
 
+    this.socialAuthServiceConfig.authState.subscribe((userResponse: SocialUser) => {
       //if login fails, it will return null.
       this.loggedIn = (userResponse != null);
-      if (this.loggedIn){
 
-        let localUser: UserTable = {} as UserTable;
-        localUser.googleId = userResponse.id;
-        localUser.langPreference = "en-US";
-        localUser.favoriteWords = [];
+      let localUser: UserTable = {} as UserTable;
+      localUser.googleId = userResponse.id;
+      localUser.langPreference = "en-US";
+      localUser.favoriteWords = [];
 
-        this.databaseService.AddUser(localUser).subscribe((response: UserTable) => {
-          console.log(response);
-        });
-      }
+      this.databaseService.AddUser(localUser).subscribe((response: UserTable) => {
+        console.log(response);
+      });
+
     });
-  
 
   }
   signOut(): void {

@@ -34,6 +34,10 @@ export class FavoriteWordsComponent {
       //if login fails, it will return null.
       this.loggedIn = (userResponse != null);
 
+      if (this.loggedIn == false){
+        this.router.navigate(["/login"]);
+      }
+
       if(this.loggedIn == true) {
         this.databaseService.getFavoritesbyId(this.user.id).subscribe((response: FavoriteWord[]) => {
           this.allFavesFromAzure = response;
