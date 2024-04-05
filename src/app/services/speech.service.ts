@@ -11,6 +11,7 @@ export class SpeechService {
   liveStreaming = false;
   tempWords: any;
   languagePref: string = 'en-US';
+  //es-ES
 
   speechResultList : string[] = ['demo!'];
 
