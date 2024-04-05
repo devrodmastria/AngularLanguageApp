@@ -6,12 +6,12 @@ import { DictionaryModel } from '../../Models/dictionary-model';
 import { FavoriteWord } from '../../Models/favorite-words';
 import { SocialAuthService, SocialUser } from '@abacritt/angularx-social-login';
 import { DatabaseService } from '../../services/database.service';
-
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RouterOutlet, RouterLink],
+  imports: [RouterOutlet, RouterLink, MatTooltipModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
@@ -37,8 +37,6 @@ export class HomeComponent {
   @Output() createEvent = new EventEmitter<FavoriteWord>();
 
   ngOnInit(){
-
-
     
     this.socialAuthServiceConfig.authState.subscribe((u:SocialUser) => {
       this.user = u;
@@ -47,8 +45,6 @@ export class HomeComponent {
       if (this.loggedIn == false){
         this.router.navigate(["/login"]);
       }
-
-      
     })
   }
 
@@ -70,7 +66,7 @@ export class HomeComponent {
       this.speechService.speechResultList.splice(0, this.speechService.speechResultList.length);
   }
 
-  DisplayWord(word : string): void{
+  DisplayWord(word : string): string {
     this.dictionaryService.getDefinition(word).subscribe((response:DictionaryModel[]) => {
     
       this.selectedWord = word;
@@ -82,6 +78,7 @@ export class HomeComponent {
         this.selectedPron = "pronunciation not found";
       }
     })
+    return this.selectedDef; // for tooltip
   }
 
   DisplayWordCombo(word : string): void{

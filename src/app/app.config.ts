@@ -5,6 +5,7 @@ import { routes } from './app.routes';
 import { provideHttpClient } from '@angular/common/http';
 import { GoogleLoginProvider, SocialAuthServiceConfig } from '@abacritt/angularx-social-login';
 import { secretgooglecode } from './secret';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -31,7 +32,7 @@ export const appConfig: ApplicationConfig = {
           console.error(err);
         },
       } as SocialAuthServiceConfig,
-    },
+    }, provideAnimationsAsync(),
     //more providers can go here
   ]
   

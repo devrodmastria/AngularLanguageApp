@@ -51,7 +51,6 @@ export class SpeechService {
 
       if (sentence.includes(specialWord_PartA)){
         let firstIndex = sentence.indexOf(specialWord_PartA);
-        console.log('>>> dependency index is ' + firstIndex);
         
         // check if the word after 'depenency' is available and is 'injection'
         if (sentence[firstIndex + 1] != undefined && sentence[firstIndex + 1].includes(specialWord_PartB)) {
@@ -63,8 +62,6 @@ export class SpeechService {
 
           // remove trailing word - clean up the tagged word
           sentence.splice(firstIndex+1, 1);
-
-          console.log('>>> specialized word? >>> ' + sentence[firstIndex]);
 
         }
       } 

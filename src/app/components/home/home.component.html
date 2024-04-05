@@ -1,5 +1,4 @@
 @if(loggedIn){
-
   <div class="container text-center">
     <div>
       <div class="row align-items-center">
@@ -18,12 +17,25 @@
                         
                             <!-- specialized word -->
                             @if(item.includes("-")){
-                              <a (click)="DisplayWordCombo(item)" data-bs-toggle="modal" data-bs-target="#wordModal">
+                              <a (click)="DisplayWordCombo(item)" 
+                                data-bs-toggle="modal" 
+                                data-bs-target="#wordModal"
+                                (mouseover)="DisplayWordCombo(item)"
+                                matTooltip={{selectedDef}}
+                                aria-label="Word definition for screen reader"
+                                >
+                                
                                 <span class="hyper-word-combo hover-demo">{{ item }}</span>
                               </a>
                             } 
                             @else {
-                              <a (click)="DisplayWord(item)" data-bs-toggle="modal" data-bs-target="#wordModal">
+                              <a (click)="DisplayWord(item)" 
+                              data-bs-toggle="modal"
+                              data-bs-target="#wordModal"
+                              (mouseover)="DisplayWord(item)"
+                              matTooltip={{selectedDef}}
+                              aria-label="Word definition for screen reader"
+                              >
                                 <span class="hyper-word hover-demo">{{ item }}</span>
                               </a>
                             }
@@ -49,7 +61,7 @@
 
     </div>
   </div>
-  
+
   <div class="modal fade" id="wordModal" tabindex="-1" aria-labelledby="wordModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable">
       <div class="modal-content">

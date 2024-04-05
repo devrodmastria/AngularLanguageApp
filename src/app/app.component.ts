@@ -15,7 +15,7 @@ import { DatabaseService } from './services/database.service';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'Specialized Language App';
+  title = 'Assistive Learning App';
   loggedIn: boolean = false;
   debugMode : boolean = false;
 
