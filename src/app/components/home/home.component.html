@@ -1,10 +1,10 @@
 @if(loggedIn){
-  <div class="container text-center">
+  <div class="container text-center" style="margin-top: 30px;" >
     <div>
       <div class="row align-items-center">
         <div class="col"></div>
         <!-- bubble design -->
-        <div class="col" style="background-color: transparent;">
+        <div class="col" style="width: 60%;">
           
           @for (sentence of speechService.speechResultList.reverse(); track $index) {
             <div class="speech-bubble-shadow mx-auto">
@@ -88,8 +88,9 @@
   </div>
 
 
+<!-- <footer style="position: fixed; left: 0; right: 0; bottom: 0;"> -->
 
-  <div style="display: flex; position: absolute; padding: 1%; bottom: 0px; width: 100%; justify-content: center; background-color: lightblue; opacity: 0.9;">
+  <div style="display: flex; position: fixed; padding: 1%; bottom: 0px; width: 100%; justify-content: center; background-color: lightblue; opacity: 0.9;">
     @if(liveStreaming){
     <button
       type="button"
@@ -119,4 +120,8 @@
       Clear Results
     </button>
   </div>
+
+
+<!-- </footer> -->
+
 }

@@ -63,7 +63,7 @@ export class HomeComponent {
 
   ClearResults(): void {
       // clear results from screen
-      this.speechService.speechResultList.splice(0, this.speechService.speechResultList.length);
+      this.speechService.speechResultList = [];
   }
 
   DisplayWord(word : string): string {

@@ -20,7 +20,7 @@ export class SpeechService {
 
     // demon for dictionary filter
     this.filterSpecialWords('and combined words like mutual funds are highlighted in orange')
-    this.filterSpecialWords('this is the beginning of a demo where long words mix with hyperlinked colors')
+    this.filterSpecialWords('this is the beginning of a demo where long words mix with hyperlinked 1')
   }
 
   init() {
@@ -28,8 +28,9 @@ export class SpeechService {
     this.recognition.interimResults = false;
     this.recognition.lang = this.languagePref;
 
-    this.recognition.addEventListener('result', (e:any) => {
-      const transcript = Array.from(e.results)
+    this.recognition.addEventListener('result', (speechResponse:any) => {
+
+      const transcript = Array.from(speechResponse.results)
         .map((result: any) => result[0])
         .map((result) => result.transcript)
         .join('');
@@ -79,13 +80,11 @@ export class SpeechService {
     this.recognition.addEventListener('end', (condition: any) => {
       if (this.liveStreaming) {
         this.recognition.start(); //restart speech engine
-        console.log("Restarting speech recognition")
       }
     });
   }
   stopStreaming() {
     this.liveStreaming = false;
     this.recognition.stop();
-    console.log("End speech recognition")
   }
 }
