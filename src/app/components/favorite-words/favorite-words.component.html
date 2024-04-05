@@ -4,7 +4,7 @@
 
        <label style="text-align: center; margin-bottom: 1%;">Favorite words</label> 
 
-        @for (faveItem of allFavesFromAzure; track faveItem.id) {
+        @for (faveItem of this.faveList; track $index) {
 
             <div class="accordion-item">
                 <h2 class="accordion-header">

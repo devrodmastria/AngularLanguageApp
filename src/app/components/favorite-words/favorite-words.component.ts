@@ -19,15 +19,12 @@ export class FavoriteWordsComponent {
   user: SocialUser = {} as SocialUser;
   newcontext: string = ""
 
-  allFavesFromAzure: FavoriteWord[] = {} as FavoriteWord[];
-
   constructor (private socialAuthServiceConfig: SocialAuthService, private dictionaryService: DictionaryService,
     private router: Router, private route: ActivatedRoute, private databaseService:DatabaseService) {}
 
-  ngOnInit() {
+  faveList: FavoriteWord[] = this.dictionaryService.allFavorites;
 
-    // placeholder favorites
-    this.allFavesFromAzure = this.dictionaryService.allFavorites;
+  ngOnInit() {
 
     this.socialAuthServiceConfig.authState.subscribe((userResponse: SocialUser) => {
       this.user = userResponse;
@@ -40,7 +37,7 @@ export class FavoriteWordsComponent {
 
       if(this.loggedIn == true) {
         this.databaseService.getFavoritesbyId(this.user.id).subscribe((response: FavoriteWord[]) => {
-          this.allFavesFromAzure = response;
+          this.dictionaryService.allFavorites = response;
     });
   }
 })
@@ -49,9 +46,7 @@ export class FavoriteWordsComponent {
   DeleteFavorite(id: number) {
 
     // delete from Azure
-    let deleteFavItem = this.allFavesFromAzure.find(f => f.id == id)
-    let indexAzure: number = this.allFavesFromAzure.findIndex(x => x.id == id)
-    this.allFavesFromAzure.splice(indexAzure,1);
+    let deleteFavItem = this.dictionaryService.allFavorites.find(f => f.id == id)
     this.databaseService.DeleteFavorites(deleteFavItem!).subscribe()
 
     // delete from dictionary service
