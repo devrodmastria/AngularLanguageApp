@@ -5,6 +5,7 @@ import { LoginComponent } from './components/login/login.component';
 import { UserTable } from './Models/user-table';
 import { FormsModule } from '@angular/forms';
 import { DatabaseService } from './services/database.service';
+import { SpeechService } from './services/speech.service';
 
 
 @Component({
@@ -19,7 +20,8 @@ export class AppComponent {
   loggedIn: boolean = false;
   debugMode : boolean = false;
 
-  constructor (private socialAuthServiceConfig: SocialAuthService, private router: Router, private databaseService:DatabaseService) {}
+  constructor (private socialAuthServiceConfig: SocialAuthService, public speechService: SpeechService,
+    private router: Router, private databaseService:DatabaseService) {}
 
   ngOnInit() {
 
@@ -43,6 +45,14 @@ export class AppComponent {
     });
 
   }
+
+  setLanguage(lang: string):void {
+    this.speechService.languagePref = lang;
+    if(this.speechService.liveStreaming){
+      alert('Please restart streaming to apply language.')
+    }
+  }
+
   signOut(): void {
     this.socialAuthServiceConfig.signOut();
     this.router.navigate([""]); 

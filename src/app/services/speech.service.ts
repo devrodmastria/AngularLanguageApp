@@ -10,17 +10,21 @@ export class SpeechService {
   recognition =  new webkitSpeechRecognition();
   liveStreaming = false;
   tempWords: any;
-  languagePref: string = 'en-US';
+
+  languagePrefEnglish: string = 'en-US';
+  langPrefSpanishSpain: string = 'es-ES';
+  langPrefSpanishUSA: string = 'es-US';
+
+  languagePref = this.languagePrefEnglish
 
   speechResultList : string[] = ['demo!'];
-
   specializedWords : string[] = ["dependency injection", "solid principles", "mutual funds"];
 
   constructor() { 
 
     // demon for dictionary filter
     this.filterSpecialWords('and combined words like mutual funds are highlighted in orange')
-    this.filterSpecialWords('this is the beginning of a demo where long words mix with hyperlinked 1')
+    this.filterSpecialWords('this is the beginning of a demo where long words mix with hyperlinked')
   }
 
   init() {

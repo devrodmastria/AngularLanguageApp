@@ -7,13 +7,17 @@ import { FavoriteWord } from '../../Models/favorite-words';
 import { SocialAuthService, SocialUser } from '@abacritt/angularx-social-login';
 import { DatabaseService } from '../../services/database.service';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import {MatIconModule} from '@angular/material/icon'
+import {MatSliderModule} from '@angular/material/slider';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RouterOutlet, RouterLink, MatTooltipModule],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.css'
+  styleUrl: './home.component.css',
+  imports: [RouterOutlet, RouterLink, MatTooltipModule, MatIconModule, MatSliderModule, FormsModule],
+
 })
 export class HomeComponent {
 
@@ -27,14 +31,12 @@ export class HomeComponent {
 
   user:SocialUser = {} as SocialUser
 
-  AllFavorites: FavoriteWord[] = []
-
   selectedWord : string = "";
   selectedPron : string = "";
   selectedDef : string = "Click on a highlighted word to get started";
   selectedWordId: string = "";
-
-  @Output() createEvent = new EventEmitter<FavoriteWord>();
+  hyperlink_minLength : number = 5;
+  hyperlinkMaxLength : number = 15;
 
   ngOnInit(){
     
@@ -95,14 +97,12 @@ export class HomeComponent {
     newFav.userId = this.user.id;
     newFav.source = "Merriam-Webster";
 
-    // back up plan - save in temporary memory
+    //save in temporary memory
     this.dictionaryService.allFavorites.push(newFav);
 
     this.databaseService.addFavorites(newFav).subscribe((response: FavoriteWord) =>{
-      this.createEvent.emit(response);
+      console.log(response);
     })
-
-    console.log('Home Fave Added');
     
   };
 

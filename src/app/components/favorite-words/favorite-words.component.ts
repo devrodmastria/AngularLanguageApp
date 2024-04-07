@@ -17,12 +17,10 @@ import { FormsModule } from '@angular/forms';
 export class FavoriteWordsComponent {
   loggedIn: boolean = false;
   user: SocialUser = {} as SocialUser;
-  newcontext: string = ""
+  faveList: FavoriteWord[] = this.dictionaryService.allFavorites;
 
   constructor (private socialAuthServiceConfig: SocialAuthService, private dictionaryService: DictionaryService,
     private router: Router, private route: ActivatedRoute, private databaseService:DatabaseService) {}
-
-  faveList: FavoriteWord[] = this.dictionaryService.allFavorites;
 
   ngOnInit() {
 

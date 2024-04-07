@@ -20,9 +20,11 @@
                             Language
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="#">English</a>
+                            <a class="dropdown-item" (click)="setLanguage(speechService.languagePrefEnglish)">English USA @if(speechService.languagePref == speechService.languagePrefEnglish){&nbsp;&#10003;}</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Spanish</a>
+                            <a class="dropdown-item" (click)="setLanguage(speechService.langPrefSpanishUSA)">Spanish USA @if(speechService.languagePref == speechService.langPrefSpanishUSA){&nbsp;&#10003;}</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" (click)="setLanguage(speechService.langPrefSpanishSpain)">Spanish Spain @if(speechService.languagePref == speechService.langPrefSpanishSpain){&nbsp;&#10003;}</a>
                         </div>
                     </li>
 

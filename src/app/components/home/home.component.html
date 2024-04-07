@@ -13,7 +13,7 @@
                 <!-- sentence has two or more words -->
                 @if (sentence.split(' ').length > 1){ 
                     @for (item of sentence.split(' '); track $index) { 
-                        @if(item.length > 4){
+                        @if(item.length >= hyperlink_minLength){
                         
                             <!-- specialized word -->
                             @if(item.includes("-")){
@@ -88,9 +88,15 @@
   </div>
 
 
-<!-- <footer style="position: fixed; left: 0; right: 0; bottom: 0;"> -->
 
-  <div style="display: flex; position: fixed; padding: 1%; bottom: 0px; width: 100%; justify-content: center; background-color: lightblue; opacity: 0.9;">
+  <div style="display: flex; position: fixed; padding: 1%; bottom: 0px; width: 100%; align-items: center ;justify-content: center; background-color: lightblue; opacity: 0.9;">
+    
+    <span data-bs-toggle="offcanvas" data-bs-target="#offcanvasSettings" aria-controls="offcanvasSettings" style="display: flex; align-items: center; cursor: pointer;">
+      <p style="margin-right: 5px; margin-top: auto; margin-bottom: auto;">Settings</p>
+      <mat-icon style="margin-right: 20px;">settings</mat-icon>
+    </span>
+
+
     @if(liveStreaming){
     <button
       type="button"
@@ -120,8 +126,24 @@
       Clear Results
     </button>
   </div>
+  
+  <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasSettings" aria-labelledby="settings tab">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="offcanvasSettingsLabel">Streaming settings</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+      <h6>
+        Hyperlink minimum length - <strong>{{hyperlink_minLength}} letters</strong>
+      </h6>
+      
+      <mat-slider showTickMarks discrete tickInterval="1" min="4" [max]="hyperlinkMaxLength" step="1" 
+        value="hyperlinkDefaultLength" style="width: 80%;">
 
+        <input matSliderThumb [(ngModel)]="hyperlink_minLength">
+      </mat-slider>
 
-<!-- </footer> -->
+    </div>
+  </div>
 
 }
