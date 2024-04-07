@@ -18,27 +18,39 @@ export class FavoriteWordsComponent {
   loggedIn: boolean = false;
   user: SocialUser = {} as SocialUser;
   faveList: FavoriteWord[] = this.dictionaryService.allFavorites;
+  playing: boolean = false;
 
   constructor (private socialAuthServiceConfig: SocialAuthService, private dictionaryService: DictionaryService,
-    private router: Router, private route: ActivatedRoute, private databaseService:DatabaseService) {}
+    private router: Router, private databaseService:DatabaseService) {}
 
   ngOnInit() {
 
     this.socialAuthServiceConfig.authState.subscribe((userResponse: SocialUser) => {
-      this.user = userResponse;
-      //if login fails, it will return null.
-      this.loggedIn = (userResponse != null);
+          this.user = userResponse;
+          //if login fails, it will return null.
+          this.loggedIn = (userResponse != null);
 
-      if (this.loggedIn == false){
-        this.router.navigate(["/login"]);
+          if (this.loggedIn == false){
+            this.router.navigate(["/login"]);
+          }
+
+          if(this.loggedIn == true) {
+            this.databaseService.getFavoritesbyId(this.user.id).subscribe((response: FavoriteWord[]) => {
+              this.dictionaryService.allFavorites = response;
+        });
       }
-
-      if(this.loggedIn == true) {
-        this.databaseService.getFavoritesbyId(this.user.id).subscribe((response: FavoriteWord[]) => {
-          this.dictionaryService.allFavorites = response;
-    });
+    })
   }
-})
+
+  PlayAudio(url: string){
+
+    console.log('>>> NOW playing ' + url)
+
+    this.playing = true;
+    let audio = new Audio();
+    audio.src = url;
+    audio.load();
+    audio.play();
   }
 
   DeleteFavorite(id: number) {

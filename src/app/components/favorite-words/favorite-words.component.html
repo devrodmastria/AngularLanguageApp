@@ -27,14 +27,19 @@
                         <label for="exampleFormControlTextarea1" class="form-label">Notes</label>
                         <textarea  class="form-control" id="exampleFormControlTextarea1" rows="3" [(ngModel)]="faveItem.context"></textarea>
                         <button (click)="UpdateFave(faveItem)" class="btn btn-outline-info" style="margin-top: 1%;">Save</button>
-                      </div>
+                    </div>
 
                     <p style="font-style: bold; text-align: end;">Source: {{faveItem.source}}</p>
-                    <div style="display: flex; justify-content: flex-end;">
+                    <div style="display: flex; justify-content: space-between;">
+                        
+                        <audio controls>
+                            <source src={{faveItem.audioSource}} type="audio/mpeg">
+                            Your browser does not support the audio element.
+                        </audio>
+
                         <button (click)="DeleteFavorite(faveItem.id)" class="btn btn-outline-secondary">Remove from Favorites</button>
                     </div>
                     
-
                 </div>
                 </div>
             </div>

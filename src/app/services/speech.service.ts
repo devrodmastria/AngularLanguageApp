@@ -17,14 +17,15 @@ export class SpeechService {
 
   languagePref = this.languagePrefEnglish
 
-  speechResultList : string[] = ['demo!'];
+  speechResultList : string[] = ['you can also change the settings in the menu bar below!'];
   specializedWords : string[] = ["dependency injection", "solid principles", "mutual funds"];
 
   constructor() { 
 
-    // demon for dictionary filter
-    this.filterSpecialWords('and combined words like mutual funds are highlighted in orange')
-    this.filterSpecialWords('this is the beginning of a demo where long words mix with hyperlinked')
+    // demo for dictionary filter
+    this.filterSpecialWords('and combined words like mutual funds are linked to a custom dictionary database')
+    this.filterSpecialWords('this is the beginning of a demo where long words mix with special colors that are hyperlinked to a dictionary database')
+
   }
 
   init() {

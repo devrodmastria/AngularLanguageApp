@@ -22,7 +22,8 @@
                                 data-bs-target="#wordModal"
                                 (mouseover)="DisplayWordCombo(item)"
                                 matTooltip={{selectedDef}}
-                                aria-label="Word definition for screen reader"
+                                
+                                aria-label=`${selectedDef}`
                                 >
                                 
                                 <span class="hyper-word-combo hover-demo">{{ item }}</span>
@@ -42,7 +43,7 @@
                       
                         }
                         @else {
-                          <span class="regular-word">{{ item }}</span>
+                          <span>{{ item }}</span>
                         }
                         <span>&nbsp;</span>
                     }
@@ -132,6 +133,7 @@
       <h5 class="offcanvas-title" id="offcanvasSettingsLabel">Streaming settings</h5>
       <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
+
     <div class="offcanvas-body">
       <h6>
         Hyperlink minimum length - <strong>{{hyperlink_minLength}} letters</strong>
@@ -143,7 +145,15 @@
         <input matSliderThumb [(ngModel)]="hyperlink_minLength">
       </mat-slider>
 
+      <hr>
+      <h6>
+        Accessibility - hyperlink colors
+      </h6>
+
+      <mat-checkbox [checked]="hyperlinkContrast" (change)="flipColorStyle()">High Contrast</mat-checkbox>
+
     </div>
+
   </div>
 
 }

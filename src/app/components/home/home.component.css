@@ -29,33 +29,8 @@
     position: relative;
     text-decoration: underline;
 
-  }
-
-.regular-word {
-    background-color: transparent;
 }
 
-.hyper-letter-even {
-    /* CSS Tricks https://css-tricks.com/a-complete-guide-to-css-gradients/ */
-    /* wood color like Scrabble - https://www.schemecolor.com/wood-gradient.php*/
-    background-color: lightskyblue; 
-    margin-right: 2px;
-    padding-right: 5px;
-    padding-left: 5px;
-    text-align: center;
-    cursor: pointer; 
-}
-
-.hyper-letter-odd {
-    /* CSS Tricks https://css-tricks.com/a-complete-guide-to-css-gradients/ */
-    /* wood color like Scrabble - https://www.schemecolor.com/wood-gradient.php*/
-    background-color: lightsalmon; 
-    margin-right: 2px;
-    padding-right: 5px;
-    padding-left: 5px;
-    text-align: center;
-    cursor: pointer; 
-}
 
 /* source: https://onaircode.com/html-css-speech-bubble-examples/ */
 .speech-bubble-shadow {
