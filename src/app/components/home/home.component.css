@@ -1,11 +1,6 @@
-
-/* .home {
-    margin: 10px;
-    align-self: center;
-} */
-
 .hyper-word{
 
+    word-wrap:normal;
     background-color: lightskyblue; 
     margin-right: 2px;
     padding-right: 5px;
@@ -16,6 +11,7 @@
 
 .hyper-word-combo{
 
+    word-wrap:normal;
     background-color: lightsalmon; 
     margin-right: 2px;
     padding-right: 5px;
@@ -31,13 +27,10 @@
 
 }
 
-
-/* source: https://onaircode.com/html-css-speech-bubble-examples/ */
 .speech-bubble-shadow {
-
-    word-wrap:break-word;
-    width: 90%;
-    margin: 30px auto 0 0;
+    width: 100%;
+    white-space: normal;
+    margin: 0 auto 0 0;
     text-align: start;
 
     background: #efefef;
