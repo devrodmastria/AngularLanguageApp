@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { DictionaryModel } from '../Models/dictionary-model';
 import { secretkey } from '../secret';
 import { FavoriteWord } from '../Models/favorite-words';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -92,6 +93,6 @@ export class DictionaryService {
   }
 
   getDefinition(word: string):Observable<DictionaryModel[]> {
-    return this.http.get<DictionaryModel[]> (`https://dictionaryapi.com/api/v3/references/collegiate/json/${word}?key=${secretkey}`)
+    return this.http.get<DictionaryModel[]> (`https://dictionaryapi.com/api/v3/references/collegiate/json/${word}?key=${environment.dictionarykey}`)
   }
 }

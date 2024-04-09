@@ -6,6 +6,7 @@ import { provideHttpClient } from '@angular/common/http';
 import { GoogleLoginProvider, SocialAuthServiceConfig } from '@abacritt/angularx-social-login';
 import { secretgooglecode } from './secret';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { environment } from '../environments/environment';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -23,7 +24,7 @@ export const appConfig: ApplicationConfig = {
             provider: new GoogleLoginProvider(
               //Remove the .apps.googleusercontent.com from the client id
               //MAKE SURE TO HIDE IT FROM GITHUB
-              secretgooglecode
+              environment.googlekey
             ),
           },
         ],
