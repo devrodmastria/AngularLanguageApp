@@ -23,9 +23,9 @@ export class SpeechService {
   constructor() { 
 
     // demo for dictionary filter
-    this.filterSpecialWords('and combined words like mutual funds are linked to a custom dictionary database')
-    this.filterSpecialWords('this is the beginning of a demo where long words mix with special colors that are hyperlinked to a dictionary database')
-
+    this.filterSpecialWords('and combined words like mutual funds are linked to a custom dictionary')
+    this.filterSpecialWords('here you will see that long words mix with different colors that are hyperlinked to a dictionary database')
+    this.filterSpecialWords('this is the beginning of our demo')
   }
 
   init() {
@@ -40,7 +40,11 @@ export class SpeechService {
         .map((result) => result.transcript)
         .join('');
 
-      this.filterSpecialWords(transcript);
+      // avoid duplicates
+      if (this.speechResultList.includes(transcript) ==  false){
+        this.filterSpecialWords(transcript);
+      }
+
       console.log(transcript);
     });
   }
@@ -75,7 +79,22 @@ export class SpeechService {
 
     })
 
-    this.speechResultList.push(sentence.join(' '));
+    // avoid duplicates with special words
+    let newResult = sentence.join(' ');
+    if (this.speechResultList.includes(newResult) == false) {
+      this.speechResultList.push(newResult);
+    }
+  }
+
+  reverseResults(): string[]{
+
+    // BUG/NOTE -- the reverse() method deletes the last words of the last string array - don't use it here!
+    let reverseCaptions : string[] = [];
+    for (var item = this.speechResultList.length - 1; item >= 0; item--){
+      reverseCaptions.push(this.speechResultList[item]);
+    }
+
+    return reverseCaptions;
   }
 
   startStreaming() {

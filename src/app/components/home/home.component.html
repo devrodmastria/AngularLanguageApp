@@ -6,11 +6,12 @@
         <!-- bubble design -->
         <div class="col" style="width: 60%;">
           
-          @for (sentence of speechService.speechResultList.reverse(); track $index) {
+          <!-- BUG/NOTE about reverse() method: it deletes the last words of the last string array, so keep the content short! -->
+          @for (sentence of speechService.reverseResults(); track $index) {
             
             <div class="card" style="margin-top: 30px;">
               
-              <div class="speech-bubble-shadow mx-auto" style="text-wrap: normal;">
+              <div class="speech-bubble-shadow" style="text-wrap: normal;">
 
                   <!-- sentence has two or more words -->
                   @if (sentence.split(' ').length > 1){ 

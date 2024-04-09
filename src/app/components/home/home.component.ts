@@ -72,79 +72,63 @@ export class HomeComponent {
       this.speechService.speechResultList = [];
   }
 
-  DisplayWord(word : string): string {
-    this.dictionaryService.getDefinition(word).subscribe((response:DictionaryModel[]) => {
-
-      this.selectedWord = word;
-      this.selectedDef = response[0].shortdef[0];
-      if(response[0].hwi.prs != undefined){
-        this.selectedPron = response[0].hwi.prs[0].mw;
-        
-        let audioKeyPath = response[0].hwi.prs[0].sound;
-        if (audioKeyPath != undefined) {
-
-          // audio guidelines - https://dictionaryapi.com/products/json
-          // "https://media.merriam-webster.com/audio/prons/[language_code]/[country_code]/[format]/[subdirectory]/[base filename].[format]"
-
-          /*
-            if audio begins with "bix", the subdirectory should be "bix",
-            if audio begins with "gg", the subdirectory should be "gg",
-            if audio begins with a number or punctuation (eg, "_"), the subdirectory should be "number",
-            otherwise, the subdirectory is equal to the first letter of audio.
-          */
-
-          let subDir = audioKeyPath.audio.substring(0, 3)
-          switch ( subDir ) {
-            case 'bix':
-                // statement 1
-                subDir = 'bix'
-                break;
-            case 'gg':
-                subDir = 'gg'
-                break;
-            case '0':
-              case '1':
-                case '2':
-                  case '3':
-                    case '4':
-                      case '5':
-                        case '6':
-                          case '7':
-                            case '8':
-                              case '9':
-                                case '_':
-                                  subDir = 'number'
-                                  break;
-            default: 
-              subDir = subDir.substring(0,1);
-                break;
-         }
-
-          let fullUrl = `https://media.merriam-webster.com/audio/prons/en/us/mp3/${subDir}/${audioKeyPath.audio}.mp3`
-
-          //complete url
-          this.selectedAudio = fullUrl;
-
-
-        }
-      }
-      else{
-        this.selectedPron = "pronunciation not found";
-      }
-    })
-    return this.selectedDef; // for tooltip
-  }
-
   DisplayWordCombo(word : string): void{
 
     this.selectedWord = word.replace("-", " ");
     this.selectedDef = "ToDo - custom database with specialized terms"
   }
 
-  ClearSelection():void {
-    this.selectedWord = "";
-    this.selectedDef = "";
+  DisplayWord(word : string): string {
 
+    if(this.dictionaryService.hasDefinition(word) == false) {
+
+        this.dictionaryService.getDefinition(word).subscribe((response:DictionaryModel[]) => {
+
+
+          let localWord : FavoriteWord = {} as FavoriteWord;
+          localWord.word = word
+          localWord.definition = response[0].shortdef[0];
+            
+          if(response[0].hwi.prs != undefined){
+
+            localWord.phonetics = response[0].hwi.prs[0].mw;
+
+            let audioKeyPath = response[0].hwi.prs[0].sound;
+            if (audioKeyPath != undefined) {
+              
+              let subDir = audioKeyPath.audio.substring(0, 3)
+
+              // parse audio URL for dictionary API
+              localWord.audioSource = this.dictionaryService.parseAudioUrl(audioKeyPath.audio, subDir);
+
+            }
+          }
+          else{
+
+            localWord.phonetics = "pronunciation not found";
+
+          }
+
+          this.selectedWord = localWord.word;
+          this.selectedDef = localWord.definition
+          this.selectedPron = localWord.phonetics
+          this.selectedAudio = localWord.audioSource
+          this.dictionaryService.localDefinitions.push(localWord)
+
+        })
+    } else {
+
+      let localWord = this.dictionaryService.localDefinitions.find(item => item.word == word)
+      if (localWord != undefined){
+        this.selectedWord = localWord.word;
+        this.selectedDef = localWord.definition
+        this.selectedPron = localWord.phonetics
+        this.selectedAudio = localWord.audioSource
+      }
+
+    }
+
+    return this.selectedDef; // for tooltip
   }
 
   addFavorite(): void {
@@ -155,13 +139,13 @@ export class HomeComponent {
     newFav.userId = this.user.id;
     newFav.source = "Merriam-Webster";
     newFav.audioSource = this.selectedAudio;
-    newFav.id = Date.now();
-
-    //save in temporary memory
-    this.dictionaryService.allFavorites.push(newFav);
+    newFav.id = 0
 
     this.databaseService.addFavorites(newFav).subscribe((response: FavoriteWord) =>{
-      console.log(response);
+      console.log('>>> Azure DB response: ' + response.word);
+
+      //save in temporary memory
+      this.dictionaryService.allFavorites.push(response);
     })
     
   };

@@ -33,14 +33,35 @@ export class AppComponent {
       //if login fails, it will return null.
       this.loggedIn = (userResponse != null);
 
-      let localUser: UserTable = {} as UserTable;
-      localUser.googleId = userResponse.id;
-      localUser.langPreference = "en-US";
-      localUser.favoriteWords = [];
+      if (this.loggedIn){
 
-      this.databaseService.AddUser(localUser).subscribe((response: UserTable) => {
-        console.log(response);
-      });
+        console.log('login WORKED YES! -> ' + userResponse.id)
+
+        let localUser: UserTable = {
+
+          googleId : userResponse.id,
+          langPreference : "en-US",
+          favoriteWords : []
+
+        };
+
+        this.databaseService.AddUser(localUser).subscribe((response: UserTable) => {
+          console.log(response == undefined ? 'User already in DB' : 'User saved');
+        });   
+      } else {
+        console.log('login TIMEOUT ooops!')
+        let localUser: UserTable = {
+          // temporary user ID
+          googleId : Date.now().toString(),
+          langPreference : "en-US",
+          favoriteWords : []
+        };
+
+        this.databaseService.AddUser(localUser).subscribe((response: UserTable) => {
+          console.log(response);
+        });   
+      }
+
 
     });
 

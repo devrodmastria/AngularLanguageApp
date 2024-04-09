@@ -24,7 +24,6 @@ export class DatabaseService {
   }
 
   addFavorites(f:FavoriteWord):Observable<FavoriteWord>{
-    console.log(f)
     return this.http.post<FavoriteWord>(`${this.baseUrl}/Favorite`, f)
   }
 
