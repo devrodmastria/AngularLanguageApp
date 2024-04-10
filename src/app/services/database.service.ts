@@ -3,12 +3,9 @@ import { Observable } from 'rxjs';
 import { FavoriteWord } from '../Models/favorite-words';
 import { UserTable } from '../Models/user-table';
 import { Injectable, Type } from '@angular/core';
-// import { environment } from '../../environments/environment';
+import { environment } from '../../environments/environment';
 
-// const environment = import.meta.resolve("apiDomain").valueOf();
-//const environment = import.meta.resolve("apiDomain", "NODE_ENV").valueOf()
-const environment = process.env['${apiDomain}']; // DATABASE_DOMAIN
-
+const db_environment = environment.dbDomain
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +15,7 @@ export class DatabaseService {
   constructor(private http:HttpClient) { }
 
   // baseUrl: string = environment.apiDomain + "/api"
-  baseUrl: string = environment + "/api" 
+  baseUrl: string = db_environment + "/api" 
   
   getFavorites():Observable<FavoriteWord[]>{
     return this.http.get<FavoriteWord[]>(this.baseUrl);

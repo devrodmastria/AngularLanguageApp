@@ -7,13 +7,9 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { DictionaryModel } from '../Models/dictionary-model';
 import { FavoriteWord } from '../Models/favorite-words';
-// import dotenv from 'dotenv'
-// import { toNamespacedPath } from 'path';
-// dotenv.config({path:toNamespacedPath("secretkey")})
+import { environment } from '../../environments/environment';
 
-//const secretkey = import.meta.resolve("secretkey", "NODE_ENV").valueOf()
-
-const secretkey = process.env['${secretkey}'] //DICTIONARY_API
+const secret_key = environment.dictionaryAPI
 
 @Injectable({
   providedIn: 'root'
@@ -102,6 +98,6 @@ export class DictionaryService {
   }
 
   getDefinition(word: string):Observable<DictionaryModel[]> {
-    return this.http.get<DictionaryModel[]> (`https://dictionaryapi.com/api/v3/references/collegiate/json/${word}?key=${secretkey}`)
+    return this.http.get<DictionaryModel[]> (`https://dictionaryapi.com/api/v3/references/collegiate/json/${word}?key=${secret_key}`)
   }
 }

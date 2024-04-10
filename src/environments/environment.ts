@@ -1,4 +1,6 @@
 export const environment = {
     production: true,
-    apiDomain: '${secretgooglecode}'
+    dbDomain: '${DB_DOMAIN}',
+    googleLogin: '${GOOGLE_LOGIN_KEY}',
+    dictionaryAPI: '${DICTIONARY_API}'
 };

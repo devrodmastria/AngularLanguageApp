@@ -10,10 +10,7 @@ import { GoogleLoginProvider, SocialAuthServiceConfig } from '@abacritt/angularx
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { environment } from '../environments/environment';
 
-//const googleLoginProvider = import.meta.resolve("secretgooglecode", "NODE_ENV").valueOf()
-// const googleLoginProvider = import.meta.resolve("secretgooglecode").valueOf();
-// const googleLoginProvider = process.env['GOOGLE_LOGIN_MODULE'] || "googleKey";
-const googleLoginProvider = environment.apiDomain
+const googleLoginProvider = environment.googleLogin
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -41,8 +38,4 @@ export const appConfig: ApplicationConfig = {
     }, provideAnimationsAsync(),
 
   ]
-
-
-  
-  
 };

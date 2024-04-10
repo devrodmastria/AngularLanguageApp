@@ -10,9 +10,9 @@ on:
       - main
 
 env:
-  secretgooglecode: ${{ vars.GOOGLE_LOGIN_MODULE }}
-  secretkey: ${{ vars.DICTIONARY_API }}
-  apiDomain: ${{ vars.DATABASE_DOMAIN }}
+  GOOGLE_LOGIN_KEY: "{{ vars.GOOGLE_LOGIN_MODULE }}"
+  DICTIONARY_API: "{{ vars.DICTIONARY_API }}"
+  DB_DOMAIN: "{{ vars.DATABASE_DOMAIN }}"
 jobs:
   build_and_deploy_job:
     if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
