@@ -14,7 +14,7 @@ export class LoginComponent {
   user: SocialUser = {} as SocialUser;
   loggedIn: boolean = false;
 
-  title = 'Specialized Language App';
+  title = 'Assistive Learning App';
 
   constructor(private socialAuthServiceConfig: SocialAuthService, private router: Router) { }
 

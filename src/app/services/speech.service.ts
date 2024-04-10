@@ -10,16 +10,22 @@ export class SpeechService {
   recognition =  new webkitSpeechRecognition();
   liveStreaming = false;
   tempWords: any;
-  languagePref: string = 'en-US';
 
-  speechResultList : string[] = ['this is the beginning of a demo where long words mix with hyperlinked colors'];
+  languagePrefEnglish: string = 'en-US';
+  langPrefSpanishSpain: string = 'es-ES';
+  langPrefSpanishUSA: string = 'es-US';
 
+  languagePref = this.languagePrefEnglish
+
+  speechResultList : string[] = ['you can also change the settings in the menu bar below!'];
   specializedWords : string[] = ["dependency injection", "solid principles", "mutual funds"];
 
   constructor() { 
 
-    // demon for dictionary filter
-    this.filterSpecialWords('and combined words like mutual funds are highlighted in orange')
+    // demo for dictionary filter
+    this.filterSpecialWords('and combined words like mutual funds are linked to a custom dictionary')
+    this.filterSpecialWords('here you will see that long words mix with different colors that are hyperlinked to a dictionary database')
+    this.filterSpecialWords('this is the beginning of our demo')
   }
 
   init() {
@@ -27,13 +33,18 @@ export class SpeechService {
     this.recognition.interimResults = false;
     this.recognition.lang = this.languagePref;
 
-    this.recognition.addEventListener('result', (e:any) => {
-      const transcript = Array.from(e.results)
+    this.recognition.addEventListener('result', (speechResponse:any) => {
+
+      const transcript = Array.from(speechResponse.results)
         .map((result: any) => result[0])
         .map((result) => result.transcript)
         .join('');
 
-      this.filterSpecialWords(transcript);
+      // avoid duplicates
+      if (this.speechResultList.includes(transcript) ==  false){
+        this.filterSpecialWords(transcript);
+      }
+
       console.log(transcript);
     });
   }
@@ -50,7 +61,6 @@ export class SpeechService {
 
       if (sentence.includes(specialWord_PartA)){
         let firstIndex = sentence.indexOf(specialWord_PartA);
-        console.log('>>> dependency index is ' + firstIndex);
         
         // check if the word after 'depenency' is available and is 'injection'
         if (sentence[firstIndex + 1] != undefined && sentence[firstIndex + 1].includes(specialWord_PartB)) {
@@ -63,15 +73,28 @@ export class SpeechService {
           // remove trailing word - clean up the tagged word
           sentence.splice(firstIndex+1, 1);
 
-          console.log('>>> specialized word? >>> ' + sentence[firstIndex]);
-
         }
       } 
       else { console.log('>>> special words NOT FOUND')}
 
     })
 
-    this.speechResultList.push(sentence.join(' '));
+    // avoid duplicates with special words
+    let newResult = sentence.join(' ');
+    if (this.speechResultList.includes(newResult) == false) {
+      this.speechResultList.push(newResult);
+    }
+  }
+
+  reverseResults(): string[]{
+
+    // BUG/NOTE -- the reverse() method deletes the last words of the last string array - don't use it here!
+    let reverseCaptions : string[] = [];
+    for (var item = this.speechResultList.length - 1; item >= 0; item--){
+      reverseCaptions.push(this.speechResultList[item]);
+    }
+
+    return reverseCaptions;
   }
 
   startStreaming() {
@@ -81,13 +104,11 @@ export class SpeechService {
     this.recognition.addEventListener('end', (condition: any) => {
       if (this.liveStreaming) {
         this.recognition.start(); //restart speech engine
-        console.log("Restarting speech recognition")
       }
     });
   }
   stopStreaming() {
     this.liveStreaming = false;
     this.recognition.stop();
-    console.log("End speech recognition")
   }
 }

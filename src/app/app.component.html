@@ -1,33 +1,58 @@
 @if(loggedIn){
-    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: lightblue;">
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: lightblue; 
+        position: fixed; top: 0; width: 100%; z-index: 1;">
 
-            <a class="navbar-brand" href="#" style="margin-left: 10px;">{{title}}</a>
+            <a class="navbar-brand" style="margin-left: 10px;">{{title}}</a>
 
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
 
                 <!-- push navigation bar to the right corner -->
                 <ul class="navbar-nav ms-auto" style="margin-right: 1%;">
-                    <li class="nav-item active">
+                    <li class="nav-item">
                         <a class="nav-link" routerLink="/home">Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" routerLink="/fav">Favorites</a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" data-bs-toggle="dropdown"
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownLanguage" data-bs-toggle="dropdown"
+                            role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Language
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" (click)="setLanguage(speechService.languagePrefEnglish)">English USA @if(speechService.languagePref == speechService.languagePrefEnglish){&nbsp;&#10003;}</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" (click)="setLanguage(speechService.langPrefSpanishUSA)">Spanish USA @if(speechService.languagePref == speechService.langPrefSpanishUSA){&nbsp;&#10003;}</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" (click)="setLanguage(speechService.langPrefSpanishSpain)">Spanish Spain @if(speechService.languagePref == speechService.langPrefSpanishSpain){&nbsp;&#10003;}</a>
+                        </div>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownTopic" data-bs-toggle="dropdown"
                             role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Subject
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="#">English</a>
+                            <a class="dropdown-item" href="#">Biology</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Spanish</a>
+                            <a class="dropdown-item" href="#">Chemistry</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Physics</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Programming</a>
                         </div>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink="/about">About</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <button type="button" class="btn btn-link" (click)="signOut()">Sign Out</button>
                     </li>
                 </ul>
             </div>
-
-        
 
     </nav>
 }

@@ -1,11 +1,6 @@
-
-/* .home {
-    margin: 10px;
-    align-self: center;
-} */
-
 .hyper-word{
 
+    word-wrap:normal;
     background-color: lightskyblue; 
     margin-right: 2px;
     padding-right: 5px;
@@ -16,6 +11,7 @@
 
 .hyper-word-combo{
 
+    word-wrap:normal;
     background-color: lightsalmon; 
     margin-right: 2px;
     padding-right: 5px;
@@ -29,40 +25,12 @@
     position: relative;
     text-decoration: underline;
 
-  }
-
-.regular-word {
-    background-color: transparent;
 }
 
-.hyper-letter-even {
-    /* CSS Tricks https://css-tricks.com/a-complete-guide-to-css-gradients/ */
-    /* wood color like Scrabble - https://www.schemecolor.com/wood-gradient.php*/
-    background-color: lightskyblue; 
-    margin-right: 2px;
-    padding-right: 5px;
-    padding-left: 5px;
-    text-align: center;
-    cursor: pointer; 
-}
-
-.hyper-letter-odd {
-    /* CSS Tricks https://css-tricks.com/a-complete-guide-to-css-gradients/ */
-    /* wood color like Scrabble - https://www.schemecolor.com/wood-gradient.php*/
-    background-color: lightsalmon; 
-    margin-right: 2px;
-    padding-right: 5px;
-    padding-left: 5px;
-    text-align: center;
-    cursor: pointer; 
-}
-
-/* source: https://onaircode.com/html-css-speech-bubble-examples/ */
 .speech-bubble-shadow {
-
-    word-wrap:break-word;
-    width: 50%;
-    margin: 30px auto 0 0;
+    width: 100%;
+    white-space: normal;
+    margin: 0 auto 0 0;
     text-align: start;
 
     background: #efefef;
@@ -82,31 +50,3 @@
       }
     }
 }
-
-
-
-/* .speech-bubble-shadow__arrow {
-    border-left: 21px solid transparent;
-    border-top: 20px solid rgba(0, 0, 0, 0.2);
-    bottom: -25px;
-    position: absolute;
-    right: 15px;
-  
-    &::before {
-      border-left: 23px solid transparent;
-      border-top: 23px solid #a7a7a7;
-      bottom: 2px;
-      content: "";
-      position: absolute;
-      right: 5px;
-    }
-    &::after {
-      border-left: 21px solid transparent;
-      border-top: 21px solid #efefef;
-      bottom: 4px;
-      content: "";
-      position: absolute;
-      right: 6px;
-    }
-} */
-

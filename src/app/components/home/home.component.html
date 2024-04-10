@@ -1,69 +1,108 @@
-<head link rel="stylesheet"></head>
-
-<div class="container text-center">
-  <div>
-    <div class="row align-items-center">
-      <div class="col"></div>
-      <!-- bubble design -->
-      <div class="col" style="background-color: transparent;">
-        
-        @for (sentence of speechService.speechResultList; track $index) {
-          <div class="speech-bubble-shadow mx-auto">
-            <p>
-              @if (sentence.split(' ').length > 1){ @for (item of sentence.split(' '); track $index) { @if(item.length > 6){
-    
-              <!-- specialized word -->
-              @if(item.includes("-")){
-              <a (click)="DisplayWordCombo(item)" data-bs-toggle="modal" data-bs-target="#wordModal">
-                <span class="hyper-word-combo hover-demo">{{ item }}</span>
-              </a>
-              } @else {
-              <a (click)="DisplayWord(item)" data-bs-toggle="modal" data-bs-target="#wordModal">
-                <span class="hyper-word hover-demo">{{ item }}</span>
-              </a>
-              } } @else {
-              <span class="regular-word">{{ item }}</span>
-              }
-              <span>&nbsp;</span>
-              } }
-            </p>
+@if(loggedIn){
+  <div class="container text-center" style="margin-top: 30px;" >
+    <div>
+      <div class="row align-items-center">
+        <div class="col"></div>
+        <!-- bubble design -->
+        <div class="col" style="width: 60%;">
+          
+          <!-- BUG/NOTE about reverse() method: it deletes the last words of the last string array, so keep the content short! -->
+          @for (sentence of speechService.reverseResults(); track $index) {
             
-          </div>
-        }
-        
+            <div class="card" style="margin-top: 30px;">
+              
+              <div class="speech-bubble-shadow" style="text-wrap: normal;">
+
+                  <!-- sentence has two or more words -->
+                  @if (sentence.split(' ').length > 1){ 
+                      @for (item of sentence.split(' '); track $index) { 
+                          @if(item.length >= hyperlink_minLength){
+                          
+                              <!-- specialized word -->
+                              @if(item.includes("-")){
+                                <a (click)="DisplayWordCombo(item)" 
+                                  data-bs-toggle="modal" 
+                                  data-bs-target="#wordModal"
+                                  (mouseover)="DisplayWordCombo(item)"
+                                  matTooltip={{selectedDef}}
+                                  
+                                  aria-label=`${selectedDef}`
+                                  >
+                                  
+                                  <span class="hyper-word-combo hover-demo">{{ item }}</span>
+                                </a>
+                              } 
+                              @else {
+                                <a (click)="DisplayWord(item)" 
+                                data-bs-toggle="modal"
+                                data-bs-target="#wordModal"
+                                (mouseover)="DisplayWord(item)"
+                                matTooltip={{selectedDef}}
+                                aria-label="Word definition for screen reader"
+                                >
+                                  <span class="hyper-word hover-demo">{{ item }}</span>
+                                </a>
+                              }
+                        
+                          }
+                          @else {
+                            <span style="word-wrap:normal;">{{ item }}</span>
+                          }
+                          <span>&nbsp;</span>
+                      }
+                  }
+                  @else { <!-- sentence has only one word -->
+                    <span>{{ sentence }}</span>
+                  }
+                
+                
+              </div>
+
+            </div>
+          }
+          
+        </div>
+        <div class="col"></div>
       </div>
-      <div class="col"></div>
+
     </div>
-
   </div>
-</div>
- 
-<div class="modal fade" id="wordModal" tabindex="-1" aria-labelledby="wordModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="wordModalLabel">Definition</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <h3>{{selectedWord}} </h3>
-        <br>
-        <p>{{selectedDef}}</p>
-        <br>
-        <p style="font-style: italic">{{selectedPron}}</p>
-        
-      </div>
-      <div class="modal-footer" style="display: flex; justify-content: space-between;">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" (click)="AddFav()" class="btn btn-primary"><i class="bi bi-star"> Save</i></button>
+
+  <div class="modal fade" id="wordModal" tabindex="-1" aria-labelledby="wordModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="wordModalLabel">Definition</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <h3>{{selectedWord}} </h3>
+          <br>
+
+          <p>Definition: <strong>{{selectedDef}}</strong></p>
+          <br>
+          <p>Phonetics: <span style="font-style: italic">{{selectedPron}}</span></p>
+          <p style="font-style: bold; text-align: end;">Source: Merriam-Webster</p>
+          
+        </div>
+        <div class="modal-footer" style="display: flex; justify-content: space-between;">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" (click)="addFavorite()" class="btn btn-primary" data-bs-dismiss="modal"><i class="bi bi-star"> Save</i></button> 
+        </div>
       </div>
     </div>
   </div>
-</div>
 
 
 
-  <div style="display: flex; position: absolute; bottom: 3%; width: 100%; justify-content: center;">
+  <div style="display: flex; position: fixed; padding: 1%; bottom: 0px; width: 100%; align-items: center ;justify-content: center; background-color: lightblue; opacity: 0.9;">
+    
+    <span data-bs-toggle="offcanvas" data-bs-target="#offcanvasSettings" aria-controls="offcanvasSettings" style="display: flex; align-items: center; cursor: pointer;">
+      <p style="margin-right: 5px; margin-top: auto; margin-bottom: auto;">Settings</p>
+      <mat-icon style="margin-right: 20px;">settings</mat-icon>
+    </span>
+
+
     @if(liveStreaming){
     <button
       type="button"
@@ -86,12 +125,40 @@
     <button
       type="button"
       class="btn btn-outline-secondary"
-      style="margin-left: 10px"
+      style="margin-left: 10px;"
       (click)="ClearResults()"
       [disabled]="!(speechService.speechResultList.length > 1)"
     >
       Clear Results
     </button>
   </div>
+  
+  <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasSettings" aria-labelledby="settings tab">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="offcanvasSettingsLabel">Streaming settings</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
 
+    <div class="offcanvas-body">
+      <h6>
+        Hyperlink minimum length - <strong>{{hyperlink_minLength}} letters</strong>
+      </h6>
+      
+      <mat-slider showTickMarks discrete tickInterval="1" min="4" [max]="hyperlinkMaxLength" step="1" 
+        value="hyperlinkDefaultLength" style="width: 80%;">
 
+        <input matSliderThumb [(ngModel)]="hyperlink_minLength">
+      </mat-slider>
+
+      <hr>
+      <h6>
+        Accessibility - hyperlink colors
+      </h6>
+
+      <mat-checkbox [checked]="hyperlinkContrast" (change)="flipColorStyle()">High Contrast</mat-checkbox>
+
+    </div>
+
+  </div>
+
+}

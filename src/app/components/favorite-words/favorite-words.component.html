@@ -1,1 +1,58 @@
-<p>favorite-words works!</p>
+@if(loggedIn){
+
+
+    @if(favesLoaded){
+    
+        <div class="accordion" id="accordionExample" style="margin: 30px 20%;">
+
+        <label style="text-align: center; margin-bottom: 1%;">Favorite words</label> 
+
+            @for (faveItem of dictionaryService.allFavorites; track $index) {
+
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" 
+                        [attr.data-bs-target]="'#collapse'+faveItem.id" aria-expanded="true" aria-controls="collapseOne">
+                        {{faveItem.word}}
+                    </button>
+                    </h2>
+                    <div [attr.id]="'collapse'+faveItem.id" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        
+                        
+                        <p>Definition: <strong>{{faveItem.definition}}</strong></p>
+                        <br>
+                        <p>Phonetics: <span style="font-style: italic">{{faveItem.phonetics}}</span></p>
+
+                        <br>
+
+                        <div class="mb-3">
+                            <label for="exampleFormControlTextarea1" class="form-label">Notes</label>
+                            <textarea  class="form-control" id="exampleFormControlTextarea1" rows="3" [(ngModel)]="faveItem.context"></textarea>
+                            <button (click)="UpdateFave(faveItem)" class="btn btn-outline-info" style="margin-top: 1%;">Save</button>
+                        </div>
+
+                        <p style="font-style: bold; text-align: end;">Source: {{faveItem.source}}</p>
+                        <div style="display: flex; justify-content: space-between;">
+                            
+                            <audio controls>
+                                <source src={{faveItem.audioSource}} type="audio/mpeg">
+                                Your browser does not support the audio element.
+                            </audio>
+
+                            <button (click)="DeleteFavorite(faveItem.id)" class="btn btn-outline-secondary">Remove from Favorites</button>
+                        </div>
+                        
+                    </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    @else {
+        <div style="display: block; margin: 10% 50%">
+            <mat-spinner style="align-self: center;"></mat-spinner>
+        </div>
+    }
+
+}

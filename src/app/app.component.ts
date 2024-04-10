@@ -1,54 +1,81 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
-import { SpeechService } from './services/speech.service';
-import { SocialAuthService, SocialUser } from '@abacritt/angularx-social-login';
+import { GoogleSigninButtonModule, SocialAuthService, SocialUser } from '@abacritt/angularx-social-login';
 import { LoginComponent } from './components/login/login.component';
-import { FavoriteWord } from './Models/favorite-words';
 import { UserTable } from './Models/user-table';
 import { FormsModule } from '@angular/forms';
 import { DatabaseService } from './services/database.service';
+import { SpeechService } from './services/speech.service';
 
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, RouterLink, LoginComponent, FormsModule],
+  imports: [RouterOutlet, RouterLink, LoginComponent, FormsModule, GoogleSigninButtonModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'Specialized Language App';
-
+  title = 'Assistive Learning App';
   loggedIn: boolean = false;
-  allFavorites:FavoriteWord[] = [];
-  allUsers: UserTable = {} as UserTable;
-  user: SocialUser = {} as SocialUser;
-
   debugMode : boolean = false;
 
-  constructor (private socialAuthServiceConfig: SocialAuthService, private router: Router, private databaseService:DatabaseService) {}
+  constructor (private socialAuthServiceConfig: SocialAuthService, public speechService: SpeechService,
+    private router: Router, private databaseService:DatabaseService) {}
 
   ngOnInit() {
 
-    if(this.debugMode == false){
-      this.socialAuthServiceConfig.authState.subscribe((userResponse: SocialUser) => {
-        this.user = userResponse;
-        //if login fails, it will return null.
-        this.loggedIn = (userResponse != null);
-      });
+    if (this.loggedIn == false){
+      this.router.navigate(["/login"]);
     }
-    else {
-      this.loggedIn = true;
-    }
+
+    this.socialAuthServiceConfig.authState.subscribe((userResponse: SocialUser) => {
+      //if login fails, it will return null.
+      this.loggedIn = (userResponse != null);
+
+      if (this.loggedIn){
+
+        console.log('login WORKED YES! -> ' + userResponse.id)
+
+        let localUser: UserTable = {
+
+          googleId : userResponse.id,
+          langPreference : "en-US",
+          favoriteWords : []
+
+        };
+
+        this.databaseService.AddUser(localUser).subscribe((response: UserTable) => {
+          console.log(response == undefined ? 'User already in DB' : 'User saved');
+        });   
+      } else {
+        console.log('login TIMEOUT ooops!')
+        let localUser: UserTable = {
+          // temporary user ID
+          googleId : Date.now().toString(),
+          langPreference : "en-US",
+          favoriteWords : []
+        };
+
+        this.databaseService.AddUser(localUser).subscribe((response: UserTable) => {
+          console.log(response);
+        });   
+      }
+
+
+    });
 
   }
 
+  setLanguage(lang: string):void {
+    this.speechService.languagePref = lang;
+    if(this.speechService.liveStreaming){
+      alert('Please restart streaming to apply language.')
+    }
+  }
 
-  @Output() createEvent = new EventEmitter<FavoriteWord>();
-  
-  addFavorite(newFave: FavoriteWord): void {
-    this.databaseService.addFavorites(newFave).subscribe((response: FavoriteWord) =>{
-      this.createEvent.emit(response);
-    })
+  signOut(): void {
+    this.socialAuthServiceConfig.signOut();
+    this.router.navigate([""]); 
   }
 }

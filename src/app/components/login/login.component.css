@@ -1,0 +1,13 @@
+.login-table {
+    margin: 100px auto 20px auto; 
+    border: 3px solid lightblue; 
+    border-radius: 10px; 
+    padding-left: 10px; 
+    padding-right: 10px;
+}
+
+.custom-row{
+    height: 100%; /* Adjust the height as needed */
+    background-repeat: no-repeat;
+    background-size: contain;
+}

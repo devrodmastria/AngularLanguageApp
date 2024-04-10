@@ -9,7 +9,6 @@ export interface FavoriteWord {
     context:     string;
     audioSource: string;
     id:          number;
-   // user:        User;
 }
 
 
