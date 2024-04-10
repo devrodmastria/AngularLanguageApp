@@ -7,7 +7,7 @@ import { Injectable, Type } from '@angular/core';
 
 // const environment = import.meta.resolve("apiDomain").valueOf();
 //const environment = import.meta.resolve("apiDomain", "NODE_ENV").valueOf()
-const environment = process.env.DATABASE_DOMAIN;
+const environment = process.env['DATABASE_DOMAIN'];
 
 @Injectable({
   providedIn: 'root'
