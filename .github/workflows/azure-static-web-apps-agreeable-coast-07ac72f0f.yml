@@ -14,9 +14,9 @@ jobs:
     if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
     environment: backend
     env:
-      secretgooglecode: ${{ secrets.GOOGLE_LOGIN_MODULE }}
-      secretkey: ${{ secrets.DICTIONARY_API }}
-      apiDomain: ${{ secrets.DATABASE_DOMAIN }}
+      secretgooglecode: ${{ vars.GOOGLE_LOGIN_MODULE }}
+      secretkey: ${{ vars.DICTIONARY_API }}
+      apiDomain: ${{ vars.DATABASE_DOMAIN }}
     runs-on: ubuntu-latest
     name: Build and Deploy Job
     steps:
