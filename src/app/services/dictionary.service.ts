@@ -14,7 +14,10 @@ dotenv.config({path:toNamespacedPath("secretkey")})
 
 //const secretkey = import.meta.resolve("secretkey", "NODE_ENV").valueOf()
 
-const secretkey = process.env["secretkey"]?.toString; //DICTIONARY_API
+
+// const secretkey = process.env["secretkey"]?.toString; //DICTIONARY_API
+const secretkey = process.env.DICTIONARY_API
+
 console.log(secretkey)
 
 @Injectable({
