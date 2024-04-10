@@ -10,7 +10,7 @@ import { DictionaryModel } from '../Models/dictionary-model';
 import { FavoriteWord } from '../Models/favorite-words';
 
 //const secretkey = import.meta.resolve("secretkey", "NODE_ENV").valueOf()
-const secretkey = process.env['secretkey']; //DICTIONARY_API
+const secretkey = process.env.secretkey; //DICTIONARY_API
 
 
 @Injectable({

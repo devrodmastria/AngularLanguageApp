@@ -13,8 +13,8 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 //const googleLoginProvider = import.meta.resolve("secretgooglecode", "NODE_ENV").valueOf()
 // const googleLoginProvider = import.meta.resolve("secretgooglecode").valueOf();
 // const googleLoginProvider = process.env['GOOGLE_LOGIN_MODULE'] || "googleKey";
-const googleLoginProvider = process.env['secretgooglecode'] || "googleKey"; // GOOGLE_LOGIN_MODULE
-
+const googleLoginProvider = process.env.secretgooglecode || "googleKey"; // GOOGLE_LOGIN_MODULE
+// console.log(googleLoginProvider);
 
 export const appConfig: ApplicationConfig = {
   providers: [
