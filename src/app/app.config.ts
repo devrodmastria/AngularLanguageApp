@@ -7,13 +7,12 @@ import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { provideHttpClient } from '@angular/common/http';
 import { GoogleLoginProvider, SocialAuthServiceConfig } from '@abacritt/angularx-social-login';
-// import { secretgooglecode } from './secret';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 //const googleLoginProvider = import.meta.resolve("secretgooglecode", "NODE_ENV").valueOf()
 // const googleLoginProvider = import.meta.resolve("secretgooglecode").valueOf();
 // const googleLoginProvider = process.env['GOOGLE_LOGIN_MODULE'] || "googleKey";
-const googleLoginProvider = process.env['secretgooglecode'] || "NO LOGIN YET"
+const googleLoginProvider = process.env['${secretgooglecode}'] || "NO LOGIN YET"
 
 export const appConfig: ApplicationConfig = {
   providers: [

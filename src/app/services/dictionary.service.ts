@@ -6,7 +6,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { DictionaryModel } from '../Models/dictionary-model';
-// import { secretkey } from '../secret';
 import { FavoriteWord } from '../Models/favorite-words';
 // import dotenv from 'dotenv'
 // import { toNamespacedPath } from 'path';
@@ -14,9 +13,7 @@ import { FavoriteWord } from '../Models/favorite-words';
 
 //const secretkey = import.meta.resolve("secretkey", "NODE_ENV").valueOf()
 
-
-// const secretkey = process.env["secretkey"]?.toString; //DICTIONARY_API
-const secretkey = process.env['secretkey']
+const secretkey = process.env['${secretkey}'] //DICTIONARY_API
 
 @Injectable({
   providedIn: 'root'

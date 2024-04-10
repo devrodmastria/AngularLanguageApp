@@ -1,18 +1,13 @@
-(window as any).process = {
-  env: { DEBUG: undefined },
-};
-
 import { HttpClient } from '@angular/common/http';
-// import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
 import { FavoriteWord } from '../Models/favorite-words';
 import { UserTable } from '../Models/user-table';
 import { Injectable, Type } from '@angular/core';
+// import { environment } from '../../environments/environment';
 
 // const environment = import.meta.resolve("apiDomain").valueOf();
 //const environment = import.meta.resolve("apiDomain", "NODE_ENV").valueOf()
-// const environment = process.env["apiDomain"]; // DATABASE_DOMAIN
-const environment = process.env['apiDomain']
+const environment = process.env['${apiDomain}']; // DATABASE_DOMAIN
 
 
 @Injectable({
