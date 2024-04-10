@@ -10,6 +10,11 @@ import { GoogleLoginProvider, SocialAuthServiceConfig } from '@abacritt/angularx
 // import { secretgooglecode } from './secret';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
+import esbuild from 'esbuild'
+await esbuild.build({
+  platform: 'node'
+})
+
 import { env } from 'node:process';
 
 //const googleLoginProvider = import.meta.resolve("secretgooglecode", "NODE_ENV").valueOf()
