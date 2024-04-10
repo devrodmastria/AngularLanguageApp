@@ -8,10 +8,14 @@ import { Observable } from 'rxjs';
 import { DictionaryModel } from '../Models/dictionary-model';
 // import { secretkey } from '../secret';
 import { FavoriteWord } from '../Models/favorite-words';
+import dotenv from 'dotenv'
+import { toNamespacedPath } from 'path';
+dotenv.config({path:toNamespacedPath("secretkey")})
 
 //const secretkey = import.meta.resolve("secretkey", "NODE_ENV").valueOf()
-const secretkey = process.env.secretkey; //DICTIONARY_API
 
+const secretkey = process.env["secretkey"]?.toString; //DICTIONARY_API
+console.log(secretkey)
 
 @Injectable({
   providedIn: 'root'
