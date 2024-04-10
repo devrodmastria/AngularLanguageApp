@@ -12,10 +12,12 @@
     "skipLibCheck": true,
     "esModuleInterop": true,
     "sourceMap": true,
+
     "types": [
       "node",
     ],
     "typeRoots": ["@types", "node_modules/@types"],
+
     "declaration": false,
     "experimentalDecorators": true,
     "moduleResolution": "node",
@@ -28,7 +30,9 @@
       "dom"
     ]
   },
+  
   "include": ["./src"],
+
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,
