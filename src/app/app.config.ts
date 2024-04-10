@@ -10,10 +10,12 @@ import { GoogleLoginProvider, SocialAuthServiceConfig } from '@abacritt/angularx
 // import { secretgooglecode } from './secret';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
+import { env } from 'node:process';
+
 //const googleLoginProvider = import.meta.resolve("secretgooglecode", "NODE_ENV").valueOf()
 // const googleLoginProvider = import.meta.resolve("secretgooglecode").valueOf();
 // const googleLoginProvider = process.env['GOOGLE_LOGIN_MODULE'] || "googleKey";
-const googleLoginProvider = process.env['secretgooglecode'] || "NO LOGIN YET"
+const googleLoginProvider = env['secretgooglecode'] || "NO LOGIN YET"
 
 export const appConfig: ApplicationConfig = {
   providers: [
