@@ -6,7 +6,7 @@ import { DictionaryModel } from '../Models/dictionary-model';
 import { FavoriteWord } from '../Models/favorite-words';
 
 // const secretkey = process.env['secretkey'] ?? "secretkey";
-const secretkey = import.meta.resolve('secretkey');
+const secretkey = import.meta.resolve("secretkey").valueOf();
 
 
 @Injectable({

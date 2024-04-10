@@ -5,7 +5,7 @@ import { FavoriteWord } from '../Models/favorite-words';
 import { UserTable } from '../Models/user-table';
 import { Injectable, Type } from '@angular/core';
 
-const environment = import.meta.resolve('apiDomain');
+const environment = import.meta.resolve("apiDomain").valueOf();
 // const environment = process.env['apiDomain'] ?? "apiDomain";
 
 @Injectable({
