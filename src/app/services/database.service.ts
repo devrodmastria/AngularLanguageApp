@@ -1,9 +1,11 @@
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../environments/environment';
+// import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
 import { FavoriteWord } from '../Models/favorite-words';
 import { UserTable } from '../Models/user-table';
 import { Injectable, Type } from '@angular/core';
+
+const environment = process.env['apiDomain'] ?? "apiDomain";
 
 @Injectable({
   providedIn: 'root'
@@ -12,8 +14,8 @@ export class DatabaseService {
 
   constructor(private http:HttpClient) { }
 
-  baseUrl: string = environment.apiDomain + "/api"
-   
+  // baseUrl: string = environment.apiDomain + "/api"
+  baseUrl: string = environment + "/api" 
   
   getFavorites():Observable<FavoriteWord[]>{
     return this.http.get<FavoriteWord[]>(this.baseUrl);

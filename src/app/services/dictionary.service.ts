@@ -2,8 +2,10 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { DictionaryModel } from '../Models/dictionary-model';
-import { secretkey } from '../secret';
+// import { secretkey } from '../secret';
 import { FavoriteWord } from '../Models/favorite-words';
+
+const secretkey = process.env['secretkey'] ?? "secretkey";
 
 @Injectable({
   providedIn: 'root'
