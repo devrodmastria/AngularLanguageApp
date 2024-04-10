@@ -15,7 +15,6 @@ jobs:
     env: 
       secretgooglecode: ${{ secrets.secretgooglecode }}
       secretkey: ${{ secrets.secretkey }}
-      apiDomain: ${{ environment.apiDomain }}
     runs-on: ubuntu-latest
     name: Build and Deploy Job
     steps:
