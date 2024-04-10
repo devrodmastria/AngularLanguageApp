@@ -18,19 +18,18 @@ jobs:
       secretkey: ${{ secrets.DICTIONARY_API }}
       apiDomain: ${{ secrets.DATABASE_DOMAIN }}
     runs-on: ubuntu-latest
-    runs:
-      using: 'node20'
-      main: 'main.js'
     name: Build and Deploy Job
     steps:
       - uses: actions/checkout@v3
         with:
+          node-version: '20'
           submodules: true
           lfs: false
       - name: Build And Deploy
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
         with:
+          node-version: '20'
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_AGREEABLE_COAST_07AC72F0F }}
           repo_token: ${{ secrets.GITHUB_TOKEN }} # Used for Github integrations (i.e. PR comments)
           action: "upload"
