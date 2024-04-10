@@ -18,6 +18,9 @@ jobs:
       secretkey: ${{ secrets.DICTIONARY_API }}
       apiDomain: ${{ secrets.DATABASE_DOMAIN }}
     runs-on: ubuntu-latest
+    runs:
+      using: 'node20'
+      main: 'main.js'
     name: Build and Deploy Job
     steps:
       - uses: actions/checkout@v3
