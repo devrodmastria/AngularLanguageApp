@@ -1,3 +1,7 @@
+(window as any).process = {
+  env: { DEBUG: undefined },
+};
+
 import { HttpClient } from '@angular/common/http';
 // import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
