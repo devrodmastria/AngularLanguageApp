@@ -16,9 +16,7 @@ import { FavoriteWord } from '../Models/favorite-words';
 
 
 // const secretkey = process.env["secretkey"]?.toString; //DICTIONARY_API
-const secretkey = process.env['DICTIONARY_API']
-
-console.log(secretkey)
+const secretkey = process.env['secretkey']
 
 @Injectable({
   providedIn: 'root'
