@@ -3,7 +3,7 @@ name: Azure Static Web Apps CI/CD
 on:
   push:
     branches:
-      - main
+      - mainx ########################### skip this yml file until Azure is figured out! 
   pull_request:
     types: [opened, synchronize, reopened, closed]
     branches:
