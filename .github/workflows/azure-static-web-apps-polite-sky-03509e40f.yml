@@ -3,7 +3,7 @@ name: OLD Azure Static Web Apps CI/CD
 on:
   push:
     branches:
-      - mainx ########################### skip this yml file until Azure is figured out! 
+      - main ######## branch from Victor with connection to original backend database
   pull_request:
     types: [opened, synchronize, reopened, closed]
     branches:
