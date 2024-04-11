@@ -6,7 +6,7 @@ about_body {
 
     flex-wrap: wrap;
 
-    margin-top: 30px 20%;
+    margin-top: 1%;
 
     background:
         radial-gradient(black 3px, transparent 4px),
@@ -21,7 +21,7 @@ about_body {
 
 .card_01 {
     margin-top: 20px;
-    width: 24rem;
+    width: 18rem;
     border-style: solid;
     border-radius: 10%;
     padding: 15px;
@@ -33,6 +33,6 @@ about_body {
     margin-left: auto;
     margin-right: auto;
     margin-top: auto;
-    max-width: 22rem;
+    max-width: 16rem;
     border-radius: 10%;
 }
