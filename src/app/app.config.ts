@@ -33,6 +33,7 @@ export const appConfig: ApplicationConfig = {
         onError: (err) => {
           debugger;
           console.error(err);
+          console.log(environment.bigSecretTest);
         },
       } as SocialAuthServiceConfig,
     }, provideAnimationsAsync(),

@@ -9,10 +9,6 @@ on:
     branches:
       - main
 
-env:
-  GOOGLE_LOGIN_KEY: ${{ vars.GOOGLE_LOGIN_MODULE }}
-  DICTIONARY_API: ${{ vars.DICTIONARY_API }}
-  DB_DOMAIN: ${{ vars.DATABASE_DOMAIN }}
 jobs:
   build_and_deploy_job:
     if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
@@ -36,6 +32,11 @@ jobs:
           api_location: "" # Api source code path - optional
           output_location: "dist/language-app/browser" # Built app content directory - optional
           ###### End of Repository/Build Configurations ######
+        env:
+          GOOGLE_LOGIN_KEY: ${{ GOOGLE_LOGIN_MODULE }}
+          DICTIONARY_API: ${{ DICTIONARY_API }}
+          DB_DOMAIN: ${{ DATABASE_DOMAIN }}
+          BIG_SECRET: ${{ BIG_SECRET }}
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
