@@ -12,59 +12,68 @@
                 <a class="navbar-brand" style="margin-left: 10px;">{{title}}</a>
 
                 <ul class="navbar-nav" >
+
+                  @if(speechKitCompatible){
+                    <li class="nav-item">
+                    
+                      <span style="display: flex; justify-content: center; margin-right: 10px;" >
+                          <asl-google-signin-button type="standard"></asl-google-signin-button>
+                      </span>    
+                  
+                    </li>
+                  }
+                  @else {
                     <li class="nav-item">
                     
                         <span style="display: flex; justify-content: center; margin-right: 10px;" >
-                            <asl-google-signin-button type="standard"></asl-google-signin-button>
+                          <button type="button" class="btn btn-warning" >Check compatibility table below</button>
                         </span>    
                     
                     </li>
+                  }
+
                 </ul>           
 
             </nav>
 
-            
-            <table class="table table-bordered" style="display: block; position: fixed; padding: 1%; bottom: 0px;">
+            @if(this.speechKitCompatible == false){
 
-                <thead>
-                  <tr>
-                    <th scope="col">App works with</th>
-                    <th scope="col">Chrome</th>
-                    <th scope="col">Safari</th>
-                    <th scope="col">Opera</th>
-                    <th scope="col">Edge</th>
-                    <th scope="col">Firefox</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>Desktop</td>
-                    <td>&#10003;</td>
-                    <td>&#10003;</td>
-                    <td>&#10003;</td>
-                    <td>&#10003;</td>
-                    <td>&#10539;</td>
-                  </tr>
-                  <tr>
-                    <td>Mobile</td>
-                    <td>&#10003;</td>
-                    <td>&#10003;</td>
-                    <td>&#10003;</td>
-                    <td>&#10539;</td>
-                    <td>&#10539;</td>
-                  </tr>
-                </tbody>
-              </table>
+                <table class="table table-bordered" style="display: block; position: fixed; padding: 1%; bottom: 0px;">
 
-
+                  <h5>Browser compatibility</h5>
+                  <thead>
+                    <tr>
+                      <th scope="col">App works?</th>
+                      <th scope="col">Chrome</th>
+                      <th scope="col">Safari</th>
+                      <th scope="col">Opera</th>
+                      <th scope="col">Edge</th>
+                      <th scope="col">Firefox</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Desktop</td>
+                      <td>&#10003;</td>
+                      <td>&#10003;</td>
+                      <td>&#10003;</td>
+                      <td>&#10003;</td>
+                      <td>&#10539;</td>
+                    </tr>
+                    <tr>
+                      <td>Mobile</td>
+                      <td>&#10003;</td>
+                      <td>&#10003;</td>
+                      <td>&#10003;</td>
+                      <td>&#10539;</td>
+                      <td>&#10539;</td>
+                    </tr>
+                  </tbody>
+                </table>
+            }
             
         </div>  
     </div>
-
-
-
-
-
 
 }
 

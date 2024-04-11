@@ -6,8 +6,9 @@ declare var webkitSpeechRecognition: any;
 })
 export class SpeechService {
 
+  recognition: any = undefined
+  speechKitCompatible = 'webkitSpeechRecognition' in window;
 
-  recognition =  new webkitSpeechRecognition();
   liveStreaming = false;
   tempWords: any;
 
@@ -22,6 +23,10 @@ export class SpeechService {
 
   constructor() { 
 
+    if (this.speechKitCompatible){
+      this.recognition =  new webkitSpeechRecognition()
+    }
+
     // demo for dictionary filter
     this.filterSpecialWords('and combined words like mutual funds are linked to a custom dictionary')
     this.filterSpecialWords('here you will see that long words mix with different colors that are hyperlinked to a dictionary database')
@@ -30,23 +35,29 @@ export class SpeechService {
 
   init() {
 
-    this.recognition.interimResults = false;
-    this.recognition.lang = this.languagePref;
+    if(this.speechKitCompatible){
 
-    this.recognition.addEventListener('result', (speechResponse:any) => {
+      // this.recognition =  new webkitSpeechRecognition()
+      this.recognition.interimResults = false;
+      this.recognition.lang = this.languagePref;
 
-      const transcript = Array.from(speechResponse.results)
-        .map((result: any) => result[0])
-        .map((result) => result.transcript)
-        .join('');
+      this.recognition.addEventListener('result', (speechResponse:any) => {
 
-      // avoid duplicates
-      if (this.speechResultList.includes(transcript) ==  false){
-        this.filterSpecialWords(transcript);
-      }
+        const transcript = Array.from(speechResponse.results)
+          .map((result: any) => result[0])
+          .map((result) => result.transcript)
+          .join('');
 
-      console.log(transcript);
-    });
+        // avoid duplicates
+        if (this.speechResultList.includes(transcript) ==  false){
+          this.filterSpecialWords(transcript);
+        }
+
+        console.log(transcript);
+      });
+
+    }
+
   }
 
   filterSpecialWords(incoming: string): void {

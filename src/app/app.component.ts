@@ -47,7 +47,6 @@ export class AppComponent {
           console.log(response == undefined ? 'User already in DB' : 'User saved');
         });   
       } else {
-        console.log('login TIMEOUT ooops!')
         let localUser: UserTable = {
           // temporary user ID
           googleId : Date.now().toString(),

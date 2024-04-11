@@ -31,6 +31,8 @@ export class HomeComponent {
   liveStreaming: boolean = false;
   loggedIn: boolean = false;
 
+  speechKitCompatible = 'webkitSpeechRecognition' in window;
+
   user:SocialUser = {} as SocialUser
 
   selectedWord : string = "";
@@ -56,15 +58,25 @@ export class HomeComponent {
 
   StartStreaming(): void {
 
-    if(this.liveStreaming){
-      this.liveStreaming = !this.liveStreaming;
-    
-      this.speechService.stopStreaming();
-    } 
-    else {
-      this.liveStreaming = !this.liveStreaming;
-      this.speechService.startStreaming();
+    if(this.speechKitCompatible){
+
+      if(this.liveStreaming){
+        this.liveStreaming = !this.liveStreaming;
+      
+        this.speechService.stopStreaming();
+      } 
+      else {
+        this.liveStreaming = !this.liveStreaming;
+        this.speechService.startStreaming();
+      }      
+
     }
+    else 
+    {
+      alert("Sorry! Browser not compatible with our speech services")
+    }
+
+
   }
 
   ClearResults(): void {
