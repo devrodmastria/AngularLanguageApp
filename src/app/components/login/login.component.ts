@@ -2,6 +2,7 @@ import { GoogleSigninButtonModule, SocialAuthService, SocialUser } from '@abacri
 import { Component } from '@angular/core';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { HomeComponent } from '../home/home.component';
+import { ConfigEnvService } from '../../services/config-env.service';
 
 @Component({
   selector: 'app-login',
@@ -16,20 +17,25 @@ export class LoginComponent {
 
   title = 'Assistive Learning App';
 
-  constructor(private socialAuthServiceConfig: SocialAuthService, private router: Router) { }
+  constructor(private socialAuthServiceConfig: SocialAuthService, 
+    private router: Router, private configService: ConfigEnvService) { }
 
   ngOnInit() {
+
+    console.log('calling AZURE API')
+    this.configService.getAzureEnvironmentVariables().subscribe(envData => {
+      console.log('AZURE ENVS ' + envData)
+    })
+
     //authState is a custom observable that will run again any time changes are noticed.
     this.socialAuthServiceConfig.authState.subscribe((userResponse: SocialUser) => {
-
       this.user = userResponse;
-
       this.loggedIn = (userResponse != null);
-
       if(this.loggedIn) {
         this.router.navigate(["home"]); 
       }
     });
+
   }
   //login component doesn't account for logging out.
   signOut(): void {

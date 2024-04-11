@@ -75,7 +75,7 @@ export class SpeechService {
 
         }
       } 
-      else { console.log('>>> special words NOT FOUND')}
+      else { console.log('>>> special words NOT FOUND @ Speech.Service.ts')}
 
     })
 

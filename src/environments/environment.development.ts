@@ -1,4 +1,7 @@
 export const environment = {
     production: false,
-    apiDomain: "https://localhost:7137"
+    dbDomain: "https://localhost:7137",
+    googleLogin: '${GOOGLE_LOGIN_KEY}',
+    dictionaryAPI: '${DICTIONARY_API}',
+    bigSecretTest: '${BIG_SECRET}'
 };
