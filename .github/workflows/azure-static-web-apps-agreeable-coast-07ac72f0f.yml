@@ -32,11 +32,6 @@ jobs:
           api_location: "" # Api source code path - optional
           output_location: "dist/language-app/browser" # Built app content directory - optional
           ###### End of Repository/Build Configurations ######
-        env:
-          GOOGLE_LOGIN_KEY: ${{ secrets.GOOGLE_LOGIN_MODULE }}
-          DICTIONARY_API: ${{ secrets.DICTIONARY_API }}
-          DB_DOMAIN: ${{ secrets.DATABASE_DOMAIN }}
-          BIG_SECRET: ${{ secrets.BIG_SECRET }}
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
