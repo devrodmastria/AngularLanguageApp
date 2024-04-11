@@ -22,11 +22,6 @@ export class LoginComponent {
 
   ngOnInit() {
 
-    console.log('calling AZURE API')
-    this.configService.getAzureEnvironmentVariables().subscribe(envData => {
-      console.log('AZURE ENVS ' + envData)
-    })
-
     //authState is a custom observable that will run again any time changes are noticed.
     this.socialAuthServiceConfig.authState.subscribe((userResponse: SocialUser) => {
       this.user = userResponse;

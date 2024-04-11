@@ -16,7 +16,6 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
      provideHttpClient(),
-       //We are building a provider. Version 2.2.0 of package doesn't provide one.
     {
       provide: 'SocialAuthServiceConfig',
       useValue: {
@@ -33,7 +32,6 @@ export const appConfig: ApplicationConfig = {
         onError: (err) => {
           debugger;
           console.error(err);
-          console.log(environment.bigSecretTest);
         },
       } as SocialAuthServiceConfig,
     }, provideAnimationsAsync(),

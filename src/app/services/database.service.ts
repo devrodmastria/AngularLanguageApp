@@ -5,8 +5,6 @@ import { UserTable } from '../Models/user-table';
 import { Injectable, Type } from '@angular/core';
 import { environment } from '../../environments/environment';
 
-const db_environment = environment.dbDomain
-
 @Injectable({
   providedIn: 'root'
 })
@@ -14,8 +12,7 @@ export class DatabaseService {
 
   constructor(private http:HttpClient) { }
 
-  // baseUrl: string = environment.apiDomain + "/api"
-  baseUrl: string = db_environment + "/api" 
+  baseUrl: string = environment.dbDomain + "/api"
   
   getFavorites():Observable<FavoriteWord[]>{
     return this.http.get<FavoriteWord[]>(this.baseUrl);
