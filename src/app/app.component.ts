@@ -35,8 +35,6 @@ export class AppComponent {
 
       if (this.loggedIn){
 
-        console.log('login WORKED YES! -> ' + userResponse.id)
-
         let localUser: UserTable = {
 
           googleId : userResponse.id,

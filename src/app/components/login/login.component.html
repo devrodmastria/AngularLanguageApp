@@ -2,10 +2,11 @@
 
 @if (!loggedIn) { 
     <div class="row custom-row">
+
         <div style="background-image:url('/assets/realpic.jpg'); 
             background-size: 250px; background-repeat: no-repeat; 
             background-position-y: 20%; background-position-x: center;">
-        
+            
             <nav class="navbar navbar-expand-lg navbar-light" style="background-color: lightblue; display: flex; justify-content: space-between;">
 
                 <a class="navbar-brand" style="margin-left: 10px;">{{title}}</a>
@@ -21,9 +22,52 @@
                 </ul>           
 
             </nav>
+
+            
+            <table class="table table-bordered" style="display: block; position: fixed; padding: 1%; bottom: 0px;">
+
+                <thead>
+                  <tr>
+                    <th scope="col">App works with</th>
+                    <th scope="col">Chrome</th>
+                    <th scope="col">Safari</th>
+                    <th scope="col">Opera</th>
+                    <th scope="col">Edge</th>
+                    <th scope="col">Firefox</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Desktop</td>
+                    <td>&#10003;</td>
+                    <td>&#10003;</td>
+                    <td>&#10003;</td>
+                    <td>&#10003;</td>
+                    <td>&#10539;</td>
+                  </tr>
+                  <tr>
+                    <td>Mobile</td>
+                    <td>&#10003;</td>
+                    <td>&#10003;</td>
+                    <td>&#10003;</td>
+                    <td>&#10539;</td>
+                    <td>&#10539;</td>
+                  </tr>
+                </tbody>
+              </table>
+
+
+            
         </div>  
     </div>
 
+
+
+
+
+
 }
+
+
 
 <router-outlet></router-outlet>
