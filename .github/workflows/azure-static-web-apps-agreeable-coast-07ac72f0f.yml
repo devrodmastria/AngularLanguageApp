@@ -3,7 +3,7 @@ name: NEW Azure Static Web Apps CI/CD
 on:
   push:
     branches:
-      - main
+      - main_from_rod
   pull_request:
     types: [opened, synchronize, reopened, closed]
     branches:
