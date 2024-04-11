@@ -33,10 +33,10 @@ jobs:
           output_location: "dist/language-app/browser" # Built app content directory - optional
           ###### End of Repository/Build Configurations ######
         env:
-          GOOGLE_LOGIN_KEY: ${{ secrets.GOOGLE_LOGIN_MODULE }}
-          DICTIONARY_API: ${{ secrets.DICTIONARY_API }}
-          DB_DOMAIN: ${{ secrets.DATABASE_DOMAIN }}
-          BIG_SECRET: ${{ secrets.BIG_SECRET }}
+          GOOGLE_LOGIN_KEY: ${{ azure-env-vars.GOOGLE_LOGIN_MODULE }}
+          DICTIONARY_API: ${{ azure-env-vars.DICTIONARY_API }}
+          DB_DOMAIN: ${{ azure-env-vars.DATABASE_DOMAIN }}
+          BIG_SECRET: ${{ azure-env-vars.BIG_SECRET }}
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
