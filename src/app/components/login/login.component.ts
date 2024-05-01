@@ -15,6 +15,8 @@ export class LoginComponent {
   user: SocialUser = {} as SocialUser;
   loggedIn: boolean = false;
 
+  speechKitCompatible = 'webkitSpeechRecognition' in window;
+
   title = 'Assistive Learning App';
 
   constructor(private socialAuthServiceConfig: SocialAuthService, 
