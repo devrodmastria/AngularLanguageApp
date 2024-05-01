@@ -3,7 +3,7 @@ name: Rods - Azure Static Web Apps CI/CD
 on:
   push:
     branches:
-      - main_from_rod
+      - main
   pull_request:
     types: [opened, synchronize, reopened, closed]
     branches:

@@ -3,7 +3,7 @@ name: Victors - Azure Static Web Apps CI/CD
 on:
   push:
     branches:
-      - main ######## branch from Victor with connection to original backend database
+      - main_from_victors_repo ######## branch from Victor with connection to his Azure database
   pull_request:
     types: [opened, synchronize, reopened, closed]
     branches:
